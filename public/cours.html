@@ -15,7 +15,7 @@
             <input type="button" value="Jour Précédant" @click="decrementSelectedDay()" />
             <input type="button" value="Jour Suivant" @click="incrementSelectedDay()" />
             <div class="cours_item" v-for="cour in cours">
-                <h4>{{cour.matiere}}</h4>
+                <h4>De XXh à YYh : {{cour.matiere}}</h4>
                 <p>Avec M/Mme <b>{{cour.professeur}}</b> en salle n°<b>{{cour.salle.numero}}</b></p>
 
                 <br />
@@ -55,9 +55,19 @@
                 },
                 getCoursFromDate: async function (date) {
                     let jour = date.getDate();
-                    return this.jeuxTest[jour];
+                    let classes = this.jeuxTest[jour];
                     // const response = await axios.get(`http://localhost:3000/cours/${date}`);
+                    // let classes = response.data;
                     // return response.data;
+                    return this.sortClassesByDateAsc(classes)
+                },
+
+                sortClassesByDateAsc: function (classes) {
+                    classes.sort((a, b) => {
+                        console.log(new Date(a.debut).getTime() - new Date(b.debut).getTime())
+                        return new Date(a.debut).getTime() - new Date(b.debut).getTime();
+                    });
+                    return classes;
                 },
                 setJeuxTest: async function () {
                     let r = await fetch('jeuxTest.json');

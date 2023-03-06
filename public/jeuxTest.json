@@ -1,11 +1,15 @@
 {
   "6": [
     {
+      "debut": "July 20, 69 00:20:19",
+      "fin": "July 20, 69 00:20:20",
       "matiere": "Informatique",
       "professeur": "Profname",
       "salle": { "numero": 12 }
     },
     {
+      "debut": "July 20, 69 00:20:18",
+      "fin": "July 20, 69 00:20:18",
       "matiere": "Maths",
       "professeur": "Profname2",
       "salle": { "numero": 13 }
@@ -13,16 +17,22 @@
   ],
   "5": [
     {
+      "debut": "July 20, 69 00:20:18",
+      "fin": "July 20, 69 00:20:18",
       "matiere": "Français",
       "professeur": "Profname2",
       "salle": { "numero": 12 }
     },
     {
+      "debut": "July 20, 69 00:20:18",
+      "fin": "July 20, 69 00:20:18",
       "matiere": "Maths",
       "professeur": "Profname3",
       "salle": { "numero": 13 }
     },
     {
+      "debut": "July 20, 69 00:20:18",
+      "fin": "July 20, 69 00:20:18",
       "matiere": "Physique",
       "professeur": "Profname1",
       "salle": { "numero": 14 }
@@ -30,16 +40,22 @@
   ],
   "7": [
     {
+      "debut": "July 20, 69 00:20:18",
+      "fin": "July 20, 69 00:20:18",
       "matiere": "Anglais",
       "professeur": "Profname42",
       "salle": { "numero": 12 }
     },
     {
+      "debut": "July 20, 69 00:20:18",
+      "fin": "July 20, 69 00:20:18",
       "matiere": "Français",
       "professeur": "Profname33",
       "salle": { "numero": 13 }
     },
     {
+      "debut": "July 20, 69 00:20:18",
+      "fin": "July 20, 69 00:20:18",
       "matiere": "Informatique",
       "professeur": "Profname12",
       "salle": { "numero": 14 }
