@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>cours</title>
+</head>
+
+<body>
+    <div id="app">
+        <h1>Cours du {{formatDate(selectedDate)}}</h1>
+        <div class="cours">
+            <input type="button" value="Jour Précédant" @click="decrementSelectedDay()" />
+            <input type="button" value="Jour Suivant" @click="incrementSelectedDay()" />
+            <div class="cours_item" v-for="cour in cours">
+                <h4>De {{formatClassesDate(cour.debut)}}h à {{formatClassesDate(cour.fin)}}h : {{cour.matiere}}</h4>
+                <p>Avec M/Mme <b>{{cour.professeur}}</b> en salle n°<b>{{cour.salle.numero}}</b></p>
+
+                <br />
+            </div>
+
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+
+        const dayInMs = 1000 * 60 * 60 * 24;
+        Vue.createApp({
+            data() {
+                return {
+                    cours: [],
+                    selectedDate: new Date(),
+                    jeuxTest: {}
+                };
+            },
+            methods: {
+                formatDate: function (date) {
+                    return date.toLocaleDateString("fr-FR");
+                },
+                incrementSelectedDay: async function () {
+                    let newDate = new Date()
+                    newDate.setTime(this.selectedDate.getTime() + dayInMs);
+                    this.selectedDate = newDate;
+                    this.cours = await this.getCoursFromDate(this.selectedDate);
+                },
+                decrementSelectedDay: async function () {
+                    let newDate = new Date()
+                    newDate.setTime(this.selectedDate.getTime() - dayInMs);
+                    this.selectedDate = newDate;
+                    this.cours = await this.getCoursFromDate(this.selectedDate);
+                },
+                getCoursFromDate: async function (date) {
+                    let jour = date.getDate();
+                    let classes = this.jeuxTest[jour];
+
+                    // const response = await axios.get(`http://localhost:3000/cours/${date}`);
+                    // let classes = response.data;
+                    // return response.data;
+                    return this.sortClassesByDateAsc(classes);
+                },
+                formatClassesDate: function (date) {
+                    return new Date(date).toLocaleTimeString("fr-FR", { hour: '2-digit', minute: '2-digit' });
+
+                },
+
+                sortClassesByDateAsc: function (classes) {
+                    console.log(classes);
+                    classes.sort((a, b) => {
+                        return new Date(a.debut).getTime() - new Date(b.debut).getTime();
+                    });
+                    return classes;
+                },
+                setJeuxTest: async function () {
+                    let r = await fetch('jeuxTest.json');
+                    let data = await r.json();
+                    this.jeuxTest = data;
+                }
+            },
+            mounted: async function () {
+                await this.setJeuxTest();
+                this.cours = await this.getCoursFromDate(this.selectedDate);
+            }
+
+        }).mount('#app');
+    </script>
+</body>
+
+</html>
