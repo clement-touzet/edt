@@ -1,15 +1,15 @@
 {
   "6": [
     {
-      "debut": "July 20, 69 00:20:19",
-      "fin": "July 20, 69 00:20:20",
+      "debut": "July 20, 69 09:20:00",
+      "fin": "July 20, 69 010:20:00",
       "matiere": "Informatique",
       "professeur": "Profname",
       "salle": { "numero": 12 }
     },
     {
-      "debut": "July 20, 69 00:20:18",
-      "fin": "July 20, 69 00:20:18",
+      "debut": "July 20, 69 08:00:00",
+      "fin": "July 20, 69 09:00:00",
       "matiere": "Maths",
       "professeur": "Profname2",
       "salle": { "numero": 13 }
