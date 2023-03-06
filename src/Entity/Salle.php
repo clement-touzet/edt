@@ -86,7 +86,6 @@ class Salle implements \JSONSerializable
         return [
             'id' => $this->getId(),
             'numero' => $this->getNumero(),
-            'cours' => $this->getCours()->toArray(),
         ];
     }
 }
