@@ -22,13 +22,18 @@ class CoursController extends AbstractController
     #[Route('/cours-from-date', name: 'list', methods: ['GET'])]
     public function getCoursFromDate(Request $request, CoursRepository $repository): JsonResponse
     {
-        $requestedDate = $request->query->get("date");
+        $jour = $request->query->get("jour");
+        $mois = $request->query->get("mois");
+        $annee = $request->query->get("annee");
+        $requestedDate = $annee . "-" . $mois . "-" . $jour;
 
-        if (is_null($requestedDate)) {
+        if (is_null($jour) || is_null($mois) || is_null($annee)) {
             return $this->json(["error" => "Requête mal formattée"], Response::HTTP_BAD_REQUEST);
         }
+        // var_dump($requestedDate);
         $coursFromDate = $repository->findByDateField($requestedDate);
-        return $coursFromDate;
+        // var_dump($coursFromDate);
+        return $this->json($coursFromDate, Response::HTTP_OK);
         // $date = new DateTimeImmutable($data);
         // return 
     }

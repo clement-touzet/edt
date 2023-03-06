@@ -15,8 +15,11 @@
             <input type="button" value="Jour Précédant" @click="decrementSelectedDay()" />
             <input type="button" value="Jour Suivant" @click="incrementSelectedDay()" />
             <div class="cours_item" v-for="cour in cours">
-                <h4>De {{formatClassesDate(cour.debut)}}h à {{formatClassesDate(cour.fin)}}h : {{cour.matiere}}</h4>
-                <p>Avec M/Mme <b>{{cour.professeur}}</b> en salle n°<b>{{cour.salle.numero}}</b></p>
+                <h4>De {{formatClassesDate(cour.dateHeureDebut.date)}}h à {{formatClassesDate(cour.dateHeureFin.date)}}h
+                    :
+                    {{cour.matiere.titre}}</h4>
+                <p>Avec M/Mme <b>{{cour.professeur.nom}} {{cour.professeur.prenom}}</b> en salle
+                    n°<b>{{cour.salle.numero}}</b></p>
 
                 <br />
             </div>
@@ -54,12 +57,15 @@
                     this.cours = await this.getCoursFromDate(this.selectedDate);
                 },
                 getCoursFromDate: async function (date) {
+                    console.log("date", date)
                     let jour = date.getDate();
-                    let classes = this.jeuxTest[jour];
+                    let mois = date.getMonth() + 1;
+                    let annee = date.getFullYear();
+                    console.log("annee", annee)
 
-                    // const response = await axios.get(`http://localhost:3000/cours/${date}`);
-                    // let classes = response.data;
-                    // return response.data;
+                    const response = await axios.get(`http://localhost:8000/api/cours/cours-from-date?annee=${annee}&mois=${mois}&jour=${jour}`);
+                    let classes = response.data;
+                    console.log(response)
                     return this.sortClassesByDateAsc(classes);
                 },
                 formatClassesDate: function (date) {
@@ -68,7 +74,6 @@
                 },
 
                 sortClassesByDateAsc: function (classes) {
-                    console.log(classes);
                     classes.sort((a, b) => {
                         return new Date(a.debut).getTime() - new Date(b.debut).getTime();
                     });

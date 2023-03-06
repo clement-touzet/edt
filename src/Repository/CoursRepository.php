@@ -45,12 +45,12 @@ class CoursRepository extends ServiceEntityRepository
     public function findByDateField($date): array
     {
         return $this->createQueryBuilder('cours')
-            ->andWhere('DAY(cours.debut) = DAY(:date)')
-            ->andWhere('MONTH(cours.debut) = MONTH(:date)')
-            ->andWhere('YEAR(cours.debut) = YEAR(:date)')
+            ->andWhere('DAY(cours.dateHeureDebut) = DAY(:date)')
+            ->andWhere('MONTH(cours.dateHeureDebut) = MONTH(:date)')
+            ->andWhere('YEAR(cours.dateHeureDebut) = YEAR(:date)')
             ->setParameter('date', $date)
             ->getQuery()
-            ->getOneOrNullResult();
+            ->getResult();
     }
 
     //    public function findOneBySomeField($value): ?Cours
