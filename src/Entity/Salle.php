@@ -10,7 +10,7 @@ use JsonSerializable;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: SalleRepository::class)]
-class Salle implements \JSONSerializableble
+class Salle implements \JSONSerializable
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
