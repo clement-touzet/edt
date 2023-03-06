@@ -6,10 +6,11 @@ use App\Repository\SalleRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use JsonSerializable;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: SalleRepository::class)]
-class Salle
+class Salle implements \JSONSerializableble
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -78,5 +79,14 @@ class Salle
         }
 
         return $this;
+    }
+    
+    public function jsonSerialize():mixed
+    {
+        return [
+            'id' => $this->getId(),
+            'numero' => $this->getNumero(),
+            'cours' => $this->getCours()->toArray(),
+        ];
     }
 }

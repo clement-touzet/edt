@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 
 #[ORM\Entity(repositoryClass: CoursRepository::class)]
-class Cours
+class Cours implements \JSONSerializable
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -18,11 +18,13 @@ class Cours
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     #[Assert\Type("\DateTimeInterface")]
+    #[Assert\Range(min: "8am", max: "5pm")]
     private ?\DateTimeInterface $dateHeureDebut = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     #[Assert\Type("\DateTimeInterface")]
     #[Assert\GreaterThan(propertyPath:"dateHeureDebut", message:"La date de fin ne peut pas être inférieure à la date de début")]
+    #[Assert\Range(min: "9am", max: "6pm")]
     private ?\DateTimeInterface $dateHeureFin = null;
 
     #[ORM\Column(length: 255)]
@@ -119,6 +121,19 @@ class Cours
         $this->salle = $salle;
 
         return $this;
+    }
+
+    public function jsonSerialize(): mixed
+    {
+        return [
+            'id' => $this->getId(),
+            'dateHeureDebut' => $this->getDateHeureDebut(),
+            'dateHeureFin' => $this->getDateHeureFin(),
+            'type' => $this->getType(),
+            'matiere' => $this->getMatiere(),
+            'professeur' => $this->getProfesseur(),
+            'salle' => $this->getSalle(),
+        ];
     }
 }
 ?>
