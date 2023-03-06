@@ -1,0 +1,7 @@
+{% block body %}
+	{{ form_start(form) }}
+	{{ form_end(form) }}
+
+	<a href="{{url('professeur_list')}}">Retour</a>
+	<input type="button" value="Retour" onclick="window.location.href='/professeur'"/>
+{% endblock %}

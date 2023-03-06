@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+	<div class="prefesseurs">
+		<a href="{{url('professeur_create')}}">Ajouter un professeur</a>
+		<table>
+			{% for professeur in professeurs %}
+				<tr>
+					<td>{{ professeur.id }}</td>
+					<td>{{ professeur.nom }}</td>
+					<td>{{ professeur.prenom }}</td>
+					<td>{{ professeur.email }}</td>
+					<td>
+						<a href="{{path('professeur_edit',{'id':professeur.id})}}">
+							Editer
+						</a>
+						<a href="{{path('professeur_delete',{'id':professeur.id})}}">
+							Supprimer
+						</a>
+					</td>
+				</tr>
+			{% endfor %}
+		</table>
+
+
+	</div>
+{% endblock %}
