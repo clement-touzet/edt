@@ -17,12 +17,12 @@ class Cours
     private ?int $id = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    #[Assert\DateTime]
+    #[Assert\Type("\DateTimeInterface")]
     private ?\DateTimeInterface $dateHeureDebut = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    #[Assert\DateTime]
-    //#[Assert\GreaterThan(propertyPath ="dateHeureDebut")] TODO: faire en sorte que la date de fin soit supérieure à dateDebut
+    #[Assert\Type("\DateTimeInterface")]
+    #[Assert\GreaterThan(propertyPath:"dateHeureDebut", message:"La date de fin ne peut pas être inférieure à la date de début")]
     private ?\DateTimeInterface $dateHeureFin = null;
 
     #[ORM\Column(length: 255)]
