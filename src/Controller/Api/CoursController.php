@@ -19,7 +19,7 @@ class CoursController extends AbstractController
         return $this->json($cours);
     }
 
-    #[Route('/cours-from-date', name: 'list', methods: ['GET'])]
+    #[Route('/cours-from-date', name: 'list_from_a_day', methods: ['GET'])]
     public function getCoursFromDate(Request $request, CoursRepository $repository): JsonResponse
     {
         $jour = $request->query->get("jour");
