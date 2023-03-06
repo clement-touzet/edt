@@ -1,0 +1,48 @@
+{
+  "6": [
+    {
+      "matiere": "Informatique",
+      "professeur": "Profname",
+      "salle": { "numero": 12 }
+    },
+    {
+      "matiere": "Maths",
+      "professeur": "Profname2",
+      "salle": { "numero": 13 }
+    }
+  ],
+  "5": [
+    {
+      "matiere": "Français",
+      "professeur": "Profname2",
+      "salle": { "numero": 12 }
+    },
+    {
+      "matiere": "Maths",
+      "professeur": "Profname3",
+      "salle": { "numero": 13 }
+    },
+    {
+      "matiere": "Physique",
+      "professeur": "Profname1",
+      "salle": { "numero": 14 }
+    }
+  ],
+  "7": [
+    {
+      "matiere": "Anglais",
+      "professeur": "Profname42",
+      "salle": { "numero": 12 }
+    },
+    {
+      "matiere": "Français",
+      "professeur": "Profname33",
+      "salle": { "numero": 13 }
+    },
+    {
+      "matiere": "Informatique",
+      "professeur": "Profname12",
+      "salle": { "numero": 14 }
+    }
+  ]
+}
