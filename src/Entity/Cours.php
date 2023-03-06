@@ -112,3 +112,4 @@ class Cours
         return $this;
     }
 }
+?>
