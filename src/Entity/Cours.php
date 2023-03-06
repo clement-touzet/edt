@@ -7,7 +7,6 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
-
 #[ORM\Entity(repositoryClass: CoursRepository::class)]
 class Cours implements \JSONSerializable
 {
@@ -18,13 +17,24 @@ class Cours implements \JSONSerializable
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     #[Assert\Type("\DateTimeInterface")]
-    #[Assert\Range(min: "8am", max: "5pm")]
+    //TODO: essayer de faire en sorte qu'un cours ne puisse pas être programmé sur deux jours différents et qu'il respecte les horaires 8h-18h
+    //Problème rencontré: la fonction Range sur une date ne récupère que la date du jour donc on ne peut pas programmer dans le futur
+
+
+    // #[Assert\Range(min: "8am", max: "5pm", notInRangeMessage:"Les cours commencent à min: 8h et max: 17h")]
+    // #[Assert\Range(min: '8am',max: '+9 hours')]
     private ?\DateTimeInterface $dateHeureDebut = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     #[Assert\Type("\DateTimeInterface")]
     #[Assert\GreaterThan(propertyPath:"dateHeureDebut", message:"La date de fin ne peut pas être inférieure à la date de début")]
-    #[Assert\Range(min: "9am", max: "6pm")]
+
+    //TODO: essayer de faire en sorte qu'un cours ne puisse pas être programmé sur deux jours différents et qu'il respecte les horaires 8h-18h
+    //Problème rencontré: la fonction Range sur une date ne récupère que la date du jour donc on ne peut pas programmer dans le futur
+
+    // #[Assert\Range(min: "9am", max: "6pm", notInRangeMessage:"Les cours finissent à min: 9h et max: 18h")]
+    // #[Assert\Range(min: '9am',max: '+9 hours', notInRangeMessage:"Les cours ne peuvent pas être sur plusieurs jours")]
+
     private ?\DateTimeInterface $dateHeureFin = null;
 
     #[ORM\Column(length: 255)]
