@@ -44,21 +44,26 @@
                         <div class="calendar_header">
                             <h1>Détails </h1>
                         </div>
-                        <div class="list_detail_item">
-                            <div>
-                                <div class="headline_details">Matière</div>
-                                <p class="content_details">{{selectedCours.matiere.titre}}</p>
+                        <a href="/matieres.html">
+                            <div class="list_detail_item">
+                                <div>
+                                    <div class="headline_details">Matière</div>
+                                    <p class="content_details">{{selectedCours.matiere.titre}}</p>
+                                </div>
+                                <img class="logo" src="images/right-arrow.png">
                             </div>
-                            <img class="logo" src="images/right-arrow.png">
-                        </div>
-                        <div class="list_detail_item">
-                            <div>
-                                <div class="headline_details">Professeur</div>
-                                <p class="content_details">{{selectedCours.professeur.nom}}
-                                    {{selectedCours.professeur.prenom}}</p>
+                        </a>
+                        <a href="/vue.html">
+                            <!-- impossible de mettre un @click avec un window.location.href = ... -->
+                            <div id="prof-section" class="list_detail_item">
+                                <div>
+                                    <div class="headline_details">Professeur</div>
+                                    <p class="content_details">{{selectedCours.professeur.nom}}
+                                        {{selectedCours.professeur.prenom}}</p>
+                                </div>
+                                <img class="logo" src="images/right-arrow.png">
                             </div>
-                            <img class="logo" src="images/right-arrow.png">
-                        </div>
+                        </a>
                         <div class="list_detail_item">
                             <div>
                                 <div class="headline_details">Salle</div>
@@ -72,7 +77,6 @@
                             {{formatClassesDate(selectedCours.dateHeureFin.date)}}h</p>
                         <div class="addNoteDiv">
                             <input type="button" class="addNote" value="Noter Ce Cours" />
-
                         </div>
 
 
@@ -99,6 +103,7 @@
                     darkTheme: true,
                     displayDetails: false,
                     idCoursSelected: null,
+                    baseUrl: "localhost:8000",
                 };
             },
             methods: {
