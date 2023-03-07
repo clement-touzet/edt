@@ -10,7 +10,40 @@
 
 <body>
     <div class="app">
-        Noter le cours
+        <form class="" v-on:submit.prevent="addNoteCours()">
+            <div class="form-group">
+                <label for="note">Note</label>
+                <select name="note" id="note" class="form-control" v-model="nouvelleNote.note">
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="commentaire">Commentaire</label>
+                <textarea name="commentaire" id="commentaire" cols="30" rows="2" class="form-control" required
+                    v-model="nouvelleNote.commentaire"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="text" name="email" id="email" cols="30" rows="2" class="form-control" required
+                    v-model="nouvelleNote.emailEtudiant"></input>
+            </div>
+            <div class="form-group mt-3">
+                <input type="submit" class="btn btn-primary" value="Ajouter">
+            </div>
+
+            <ul class="text-danger">
+                <li v-for="error in errors">
+                    {{error}}
+                </li>
+            </ul>
+
+        </form>
     </div>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
@@ -19,16 +52,26 @@
             data() {
                 return {
                     baseUrl: "localhost:8000",
+                    nouvelleNote: {
+                        note: 0,
+                        commentaire: "",
+                        emailEtudiant: "",
+                    },
+                    errors: [],
                 };
             },
             methods: {
                 addNoteCours: function () {
-                    axios.post(`${this.baseUrl}/api/cours/${this.cours.id}/note`, this.noteCours)
+                    resetErrors();
+                    axios.post(`${this.baseUrl}/api/notecours/${this.cours.id}/create`, this.nouvelleNote)
                         .then(response => {
                             this.cours.push(response.data);
                             this.noteCours = this.createNoteCours();
                         })
                         .catch(error => this.errors = Object.values(error.response.data));
+                },
+                resetErrors: function () {
+                    this.errors = [];
                 },
             }
         }).mount('#app');

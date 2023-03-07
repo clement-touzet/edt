@@ -61,7 +61,6 @@ class ProfesseurController extends AbstractController
             ->fromArray($data)
             ->setProfesseur($professeur);
 
-
         $errors = $validator->validate($avis);
 
         if ($errors->count() > 0) {
