@@ -15,17 +15,34 @@ Liste de tous les cours:
 http://localhost:8000/api/cours
 ```
 
-Liste des cours pour une date précise
-/api/cours/cours-from-date?annee=AAAA&mois=MM&jour=JJ
+Liste des cours pour une date précise: [/api/cours/cours-from-date?annee=AAAA&mois=MM&jour=JJ](http://localhost:8000/api/cours/cours-from-date?annee=2023&mois=03&jour=04)
 
 ```
-[http://localhost:8000/api/cours/cours-from-date?annee=2023&mois=03&jour=04](http://localhost:8000/api/cours/cours-from-date?annee=2023&mois=03&jour=04)
+http://localhost:8000/api/cours/cours-from-date?annee=2023&mois=03&jour=04
 ```
 
 ### Salles
 
-Pour obtenir la liste des salles
-/api/salles
+Liste des salles
+[/api/salles](http://localhost:8000/api/salles)
+
+```
+http://localhost:8000/api/salles
+```
+
+### Matière
+
+Liste des matières: [/api/matiere](http://localhost:8000/api/matiere)
+
+```
+http://localhost:8000/api/matiere
+```
+
+Liste des professeurs par matières: [/api/matiere/professeurs](http://localhost:8000/api/matiere/professeurs)
+
+```
+http://localhost:8000/api/matiere/professeurs
+```
 
 # Validateurs ajoutés
 
