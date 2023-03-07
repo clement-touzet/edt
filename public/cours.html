@@ -82,7 +82,7 @@
                             <img class="logo" src="images/right-arrow.png">
                         </div>
                         <div class="addNoteDiv">
-                            <a href="/noterCours.html?coursId=">
+                            <a :href="`/noterCours.html?coursId=${idCoursSelected}`">
                                 <input type="button" class="addNote" value="Noter Ce Cours" />
                             </a>
                         </div>
@@ -172,7 +172,6 @@
                 await this.setJeuxTest();
                 this.cours = await this.getCoursFromDate(this.selectedDate);
             }
-
         }).mount('#app');
     </script>
 </body>
