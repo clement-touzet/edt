@@ -39,28 +39,27 @@ class CoursRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return Cours[] Returns an array of Cours objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->andWhere('c.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('c.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    /**
+     * @return Cours[] Returns an array of Cours objects that match the same day as $date
+     */
+    public function findByDateField($date): array
+    {
+        return $this->createQueryBuilder('cours')
+            ->andWhere('DAY(cours.dateHeureDebut) = DAY(:date)')
+            ->andWhere('MONTH(cours.dateHeureDebut) = MONTH(:date)')
+            ->andWhere('YEAR(cours.dateHeureDebut) = YEAR(:date)')
+            ->setParameter('date', $date)
+            ->getQuery()
+            ->getResult();
+    }
 
-//    public function findOneBySomeField($value): ?Cours
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->andWhere('c.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    //    public function findOneBySomeField($value): ?Cours
+    //    {
+    //        return $this->createQueryBuilder('c')
+    //            ->andWhere('c.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->getQuery()
+    //            ->getOneOrNullResult()
+    //        ;
+    //    }
 }
