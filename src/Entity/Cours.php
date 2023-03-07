@@ -19,6 +19,8 @@ class Cours implements \JSONSerializable
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     #[Assert\Type("\DateTimeInterface")]
+    #[Assert\Expression('this.pauseDej() == true', message: '')]
+
     //TODO: essayer de faire en sorte qu'un cours ne puisse pas être programmé sur deux jours différents et qu'il respecte les horaires 8h-18h
     //Problème rencontré: la fonction Range sur une date ne récupère que la date du jour donc on ne peut pas programmer dans le futur
 
@@ -30,7 +32,7 @@ class Cours implements \JSONSerializable
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     #[Assert\Type("\DateTimeInterface")]
     #[Assert\GreaterThan(propertyPath:"dateHeureDebut", message:"La date de fin ne peut pas être inférieure à la date de début")]
-
+    #[Assert\Expression('this.pauseDej() == true', message: 'Attention, les cours ne peuvent pas empiéter sur la pause du midi')]
     //TODO: essayer de faire en sorte qu'un cours ne puisse pas être programmé sur deux jours différents et qu'il respecte les horaires 8h-18h
     //Problème rencontré: la fonction Range sur une date ne récupère que la date du jour donc on ne peut pas programmer dans le futur
 
@@ -51,6 +53,7 @@ class Cours implements \JSONSerializable
     #[ORM\ManyToOne(inversedBy: 'cours')]
     #[ORM\JoinColumn(nullable: false)]
     #[Assert\NotBlank]
+    #[Assert\Expression('this.verifMatiereProfesseur()==true', message:'Vous ne pouvez pas attribuer un professeur à un cours dont il n\'enseigne pas la matière')]
     private ?Professeur $professeur = null;
 
     #[ORM\ManyToOne(inversedBy: 'cours')]
@@ -60,6 +63,34 @@ class Cours implements \JSONSerializable
 
     #[ORM\OneToMany(mappedBy: 'cours', targetEntity: NoteCours::class)]
     private Collection $noteCours;
+
+
+    /* METHODES CUSTOM POUR ASSERT */
+
+    /* verifMatiereProfesseur vérifie que le professeur assigné au cours est bien prof dans la matière du cours */
+    public function verifMatiereProfesseur(): bool
+    {
+        foreach ($this->getProfesseur()->getMatieres() as $matiere) {
+            if($matiere->getTitre() == $this->getMatiere()->getTitre()) {
+                return true;
+            }
+        };
+        return false;
+    }
+
+    public function pauseDej():bool
+    {
+        $intervalDebut = \DateTime::createFromFormat('Y-m-d H:i:s', $this->getDateHeureDebut()->format('Y-m-d H:i:s')) 
+        -> diff((\DateTime::createFromFormat('Y-m-d H:i:s', $this->getDateHeureDebut()->format('Y-m-d H:i:s'))->setTime(0,0,0)));
+
+        $intervalFin = \DateTime::createFromFormat('Y-m-d H:i:s', $this->getDateHeureFin()->format('Y-m-d H:i:s')) 
+        ->diff((\DateTime::createFromFormat('Y-m-d H:i:s', $this->getDateHeureFin()->format('Y-m-d H:i:s'))->setTime(0,0,0)));
+
+        $midi = $intervalDebut->h*60+$intervalDebut->i;
+        $quartorzeHeure = $intervalFin->h*60+$intervalFin->i;
+
+        return ($midi < 750 && $quartorzeHeure > 750) || ($midi > 750 && $quartorzeHeure < 840)? false : true;
+    }
 
     public function __construct()
     {
