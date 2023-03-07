@@ -1,29 +1,72 @@
-/** CAZENAVE Mathilde - TOUZET Clément **/ 
+`CAZENAVE Mathilde - TOUZET Clément`
 
-/** PROCESS D'INSTALLATION DU PROJET **/
-/* Cours */
-    Pour obtenir la liste de tous les cours:
-    /api/cours
+# Process d'installation du projet
 
-    Obtenir la liste des cours pour une date précise
-    /api/cours/cours-from-date?annee=aaaa&mois=mm&jour=jj
+# DEFINITION DES POINTS D'ENTREE DE L'API
 
-/* Salles */    
-    Pour obtenir la liste des salles
-    /api/salles
+# Définition des points d'entrees de l'API
 
-/** DEFINITION DES POINTS D'ENTREE DE L'API**/
+### Cours
 
-/** VALIDATEURS AJOUTES **/
+Liste de tous les cours:
+[/api/cours](http://localhost:8000/api/cours)
 
-/** CHOIX TECHNIQUES ET POURQUOI **/
+```
+http://localhost:8000/api/cours
+```
 
-/** FONCTIONNALITES ADDITIONELLES **/
+Liste des cours pour une date précise: [/api/cours/cours-from-date?annee=AAAA&mois=MM&jour=JJ](http://localhost:8000/api/cours/cours-from-date?annee=2023&mois=03&jour=04)
 
-/** IMPLEMENTE MAIS NE FONCTIONNE PAS **/
+```
+http://localhost:8000/api/cours/cours-from-date?annee=2023&mois=03&jour=04
+```
 
-/** AUTRE **/
+### Salles
 
+Liste des salles
+[/api/salles](http://localhost:8000/api/salles)
+
+```
+http://localhost:8000/api/salles
+```
+
+### Matière
+
+Liste des matières: [/api/matiere](http://localhost:8000/api/matiere)
+
+```
+http://localhost:8000/api/matiere
+```
+
+Liste des professeurs par matières: [/api/matiere/professeurs](http://localhost:8000/api/matiere/professeurs)
+
+```
+http://localhost:8000/api/matiere/professeurs
+```
+
+# Validateurs ajoutés
+
+### Cours
+
+dateHeureDebut:  
+ `#[Assert\Type("\DateTimeInterface")] //pour être sûr qu'on reçoit le bon type de date`
+
+dateHeureFin: `#[Assert\GreaterThan(propertyPath:"dateHeureDebut", message:"La date de fin ne peut pas être inférieure à la date de début")] //Pour s'assurer que la date de fin d'un cours est supérieure à la date de début (évite de faire des cours qui commencent le 06 et finissent le 05)`
+
+type:
+`#[Assert\Choice(['TD','TP','Cours'])] //On s'assure que le choix TD, TP ou cours est imposé`
+
+professeur, salle et matiere: `#[Assert\NotBlank] //Pour être sûr que les champs soient bien remplis`
+
+# Choix techniques et pourquoi
+
+# Fonctionnalitées aditionnelles
+
+### Page matieres.html
+
+Affiche chaque matières et leurs profs
+
+# Implémenté mais ne fonctionne pas
 
 Pour essayer de faire des expressions: pour faire des Assert sur les dates, j'ai ajouté le package expression-language
 
@@ -31,3 +74,15 @@ composer require symfony/expression-language
 
 MARCHE PAS donc j'en suis restée à la vérification suivante:
 Un cours ne peux pas commencer aujourd'hui et finir hier
+
+# Problèmes rencontrés et difficultés
+
+### Navigation entre les pages
+
+Pour la navigation entre les pages, mettre dans une div un @click qui exécute une fonction pour rediriger(window.location.href = "vue.html") vers une page semblait une bonne solution, mais cela ne marchais pas et le click s'activais lorsque le div était chargé/reload. La solution a été de mettre une balise a ave un href.
+
+### Note d'un cours
+
+Nous voulions utiliser la meme table Avis que pour noter un prof mais cela cause des problèmes de conflits au niveau de la db.
+
+# AUTRE

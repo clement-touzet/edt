@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 
 #[ORM\Entity(repositoryClass: NoteCoursRepository::class)]
-class NoteCours
+class NoteCours implements \JsonSerializable
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -29,6 +29,24 @@ class NoteCours
     #[ORM\ManyToOne(inversedBy: 'noteCours')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Cours $cours = null;
+
+    public function jsonSerialize(): mixed
+    {
+        return [
+            'id' => $this->getId(),
+            'note' => $this->getNote(),
+            'commentaire' => $this->getCommentaire(),
+            'emailEtudiant' => $this->getEmailEtudiant()
+        ];
+    }
+
+    public function fromArray($data): self
+    {
+        $this->note = $data['note'] ?? $this->note;
+        $this->commentaire = $data['commentaire'] ?? $this->commentaire;
+        $this->emailEtudiant = $data['emailEtudiant'] ?? $this->emailEtudiant;
+        return $this;
+    }
 
     public function getId(): ?int
     {

@@ -1,0 +1,50 @@
+* {
+  font-family: "Roboto", sans-serif;
+}
+
+.matieres {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  margin: 20px;
+  gap: 20px;
+}
+.matiere {
+  min-width: 250px;
+  min-height: 175px;
+  border: 1px solid #feb4c1;
+  border-radius: 10px;
+  padding: 20px 30px;
+  text-align: left;
+  background-color: #ffe2e7;
+}
+
+.professeur {
+  font-size: 16px;
+  margin: 10px 0;
+  color: #4f4f4f;
+}
+
+.title {
+  font-size: 20px;
+  color: #ff8494;
+}
+
+input[type="button"] {
+  background-color: #ff8494;
+  border: none;
+  color: #fff;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+input[type="button"]:hover {
+  background-color: #ffa9b7;
+}
