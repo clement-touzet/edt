@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="css/notesCours.css" rel="stylesheet">
+    <title>Document</title>
+</head>
+
+<body>
+    Notes du cours 1....
+    <div class="app" id="app">
+        <!-- affiche toutes les notes si id = null sinon affiche les notes du cours coursId -->
+        <div class="displayAllNotes">
+            <input type="button" value="displayAll" @click="displayAllCours()" />
+        </div>
+        <div class="cours">
+
+        </div>
+    </div>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        Vue.createApp({
+            data() {
+                return {
+                    baseUrl: "http://localhost:8000",
+                    nouvelleNote: {
+                        note: 0,
+                        commentaire: "",
+                        emailEtudiant: "",
+                    },
+                    errors: [],
+                    coursId: null,
+                    cours: [],
+                };
+            },
+            methods: {
+                displayAllCours: function () {
+                    axios.get(this.baseUrl + 'api/notecours/')
+                        .then(response => {
+                            console.log(response.data);
+                            this.cours = response.data;
+                        })
+                        .catch(error => {
+                            console.log(error);
+                        });
+                }
+            },
+            mounted: async function () {
+                const queryString = window.location.search;
+                const urlParams = new URLSearchParams(queryString);
+                this.coursId = urlParams.get('coursId');
+                console.log(this.coursId)
+                if (!this.coursId) {
+                    this.coursId = null;
+                }
+            }
+
+        }).mount('#app');
+    </script>
+</body>
+
+</html>
