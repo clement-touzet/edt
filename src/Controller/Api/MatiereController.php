@@ -18,7 +18,7 @@ class MatiereController extends AbstractController
         return $this->json($matieres);
     }
 
-    #[Route('/professeurs', name: '_list', methods: ['GET'])]
+    #[Route('/professeurs', name: '_professeurs', methods: ['GET'])]
     public function getProfEachMatiere(MatiereRepository $repo): JsonResponse
     {
         $matieres = $repo->findAll();

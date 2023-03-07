@@ -44,6 +44,16 @@
                         <div class="calendar_header">
                             <h1>Détails </h1>
                         </div>
+                        <div class="list_detail_item">
+                            <div class="">
+
+                                <div class="headline_details">Horaires</div>
+                                <p class="content_details">{{formatClassesDate(selectedCours.dateHeureDebut.date)}}h -
+                                    {{formatClassesDate(selectedCours.dateHeureFin.date)}}h</p>
+                            </div>
+                        </div>
+
+
                         <a href="/matieres.html">
                             <div class="list_detail_item">
                                 <div>
@@ -71,12 +81,10 @@
                             </div>
                             <img class="logo" src="images/right-arrow.png">
                         </div>
-
-                        <div class="headline_details">Horaires</div>
-                        <p class="content_details">{{formatClassesDate(selectedCours.dateHeureDebut.date)}}h -
-                            {{formatClassesDate(selectedCours.dateHeureFin.date)}}h</p>
                         <div class="addNoteDiv">
-                            <input type="button" class="addNote" value="Noter Ce Cours" />
+                            <a href="/noterCours.html">
+                                <input type="button" class="addNote" value="Noter Ce Cours" />
+                            </a>
                         </div>
                     </div>
                 </div>
