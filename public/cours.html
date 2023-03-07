@@ -5,26 +5,83 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="coursListe.css" rel="stylesheet" />
     <title>cours</title>
 </head>
 
 <body>
     <div id="app">
-        <h1>Cours du {{formatDate(selectedDate)}}</h1>
-        <div class="cours">
-            <input type="button" value="Jour Précédant" @click="decrementSelectedDay()" />
-            <input type="button" value="Jour Suivant" @click="incrementSelectedDay()" />
-            <div class="cours_item" v-for="cour in cours">
-                <h4>De {{formatClassesDate(cour.dateHeureDebut.date)}}h à {{formatClassesDate(cour.dateHeureFin.date)}}h
-                    :
-                    {{cour.matiere.titre}}</h4>
-                <p>Avec M/Mme <b>{{cour.professeur.nom}} {{cour.professeur.prenom}}</b> en salle
-                    n°<b>{{cour.salle.numero}}</b></p>
+        <div class="container">
+            <div class="fullCalendar">
+                <div class="calendar">
+                    <div class="calendar_header">
+                        <h1 class="header_title">Cours du {{formatDate(selectedDate)}}</h1>
+                    </div>
+                    <div class="center">
+                        <input type="button" value="Jour Précédent" @click="decrementSelectedDay()" />
+                        <input type="button" value="Jour Suivant" @click="incrementSelectedDay()" />
+                    </div>
 
-                <br />
+                    <div class="calendar_events">
+                        <p class="ce_title">Evènements proches</p>
+                        <div class="event_item" :class="{ event_item_selected: idCoursSelected==cour.id }"
+                            v-for="cour in cours" @click="selectCours(cour.id)">
+                            <div class="ei_Dot" :class="{ dot_selected: idCoursSelected==cour.id }">
+                                <!-- :class ne marche pas -->
+                            </div>
+                            <div class="ei_Title" :class="{ ei_selected: idCoursSelected==cour.id }">
+                                {{cour.matiere.titre}}
+                                {{formatClassesDate(cour.dateHeureDebut.date)}}h -
+                                {{formatClassesDate(cour.dateHeureFin.date)}}h</div>
+                            <div class="ei_Copy">Avec <b>{{cour.professeur.nom}} {{cour.professeur.prenom}}</b> en salle
+                                n°<b>{{cour.salle.numero}}</b></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="details">
+                    <h1 v-if="!displayDetails">cliquez pour les détails</h1>
+                    <div class="showDetails" v-if="idCoursSelected">
+                        <div class="calendar_header">
+                            <h1>Détails </h1>
+                        </div>
+                        <div class="list_detail_item">
+                            <div>
+                                <div class="headline_details">Matière</div>
+                                <p class="content_details">{{selectedCours.matiere.titre}}</p>
+                            </div>
+                            <img class="logo" src="images/right-arrow.png">
+                        </div>
+                        <div class="list_detail_item">
+                            <div>
+                                <div class="headline_details">Professeur</div>
+                                <p class="content_details">{{selectedCours.professeur.nom}}
+                                    {{selectedCours.professeur.prenom}}</p>
+                            </div>
+                            <img class="logo" src="images/right-arrow.png">
+                        </div>
+                        <div class="list_detail_item">
+                            <div>
+                                <div class="headline_details">Salle</div>
+                                <p class="content_details">{{selectedCours.salle.numero}}</p>
+                            </div>
+                            <img class="logo" src="images/right-arrow.png">
+                        </div>
+
+                        <div class="headline_details">Horaires</div>
+                        <p class="content_details">{{formatClassesDate(selectedCours.dateHeureDebut.date)}}h -
+                            {{formatClassesDate(selectedCours.dateHeureFin.date)}}h</p>
+                        <div class="addNoteDiv">
+                            <input type="button" class="addNote" value="Noter Ce Cours" />
+
+                        </div>
+
+
+                    </div>
+                </div>
+
             </div>
-
         </div>
+
     </div>
 
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
@@ -36,8 +93,12 @@
             data() {
                 return {
                     cours: [],
+                    selectedCours: {},
                     selectedDate: new Date(),
-                    jeuxTest: {}
+                    jeuxTest: {},
+                    darkTheme: true,
+                    displayDetails: false,
+                    idCoursSelected: null,
                 };
             },
             methods: {
@@ -49,12 +110,15 @@
                     newDate.setTime(this.selectedDate.getTime() + dayInMs);
                     this.selectedDate = newDate;
                     this.cours = await this.getCoursFromDate(this.selectedDate);
+                    this.resetCoursSelected();
+
                 },
                 decrementSelectedDay: async function () {
                     let newDate = new Date()
                     newDate.setTime(this.selectedDate.getTime() - dayInMs);
                     this.selectedDate = newDate;
                     this.cours = await this.getCoursFromDate(this.selectedDate);
+                    this.resetCoursSelected();
                 },
                 getCoursFromDate: async function (date) {
                     console.log("date", date)
@@ -70,7 +134,6 @@
                 },
                 formatClassesDate: function (date) {
                     return new Date(date).toLocaleTimeString("fr-FR", { hour: '2-digit', minute: '2-digit' });
-
                 },
 
                 sortClassesByDateAsc: function (classes) {
@@ -83,6 +146,15 @@
                     let r = await fetch('jeuxTest.json');
                     let data = await r.json();
                     this.jeuxTest = data;
+                },
+                selectCours: function (id) {
+                    this.idCoursSelected = id;
+                    this.displayDetails = true;
+                    this.selectedCours = this.cours.find(cour => cour.id == id);
+                },
+                resetCoursSelected: function () {
+                    this.idCoursSelected = null;
+                    this.displayDetails = false;
                 }
             },
             mounted: async function () {
