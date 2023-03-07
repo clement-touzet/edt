@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\Avis;
 use App\Entity\Cours;
 use App\Entity\Matiere;
+use App\Entity\NoteCours;
 use App\Entity\Salle;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
@@ -42,10 +43,11 @@ class DashboardController extends AbstractDashboardController
     {
         yield MenuItem::linkToDashboard('Professeur', 'fa fa-chalkboard-user');
         yield MenuItem::linkToCrud('Matiere', 'fas fa-list', Matiere::class);
-        yield MenuItem::linkToCrud('Avis', 'fas fa-star', Avis::class);
+        yield MenuItem::linkToCrud('Avis professeur', 'fas fa-star', Avis::class);
         yield MenuItem::section('Gestion des cours');
         yield MenuItem::linkToCrud('Cours', 'fas fa-book-open', Cours::class);
         yield MenuItem::linkToCrud('Salle', 'fas fa-building', Salle::class);
+        yield MenuItem::linkToCrud('Avis cours', 'fas fa-star', NoteCours::class);
     }
 }
 ?>
