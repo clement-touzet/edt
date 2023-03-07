@@ -5,27 +5,53 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="./css/matieres.css" rel="stylesheet" />
     <title>Matières</title>
 </head>
 
 <body>
-    <div id="app">Matieres</div>
-    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script>
-        Vue.createApp({
-            data() {
-                return {
-                    matieres: [{
-                        id: 0,
-                        titre: "test",
-                        professeurs: []
-                    },]
-                };
-            },
-            methods: {}
-        }).mount('#app');
-    </script>
+    <div id="app">
+        <a href="/cours.html">
+            <input type="button" value="Agenda"></input>
+        </a>
+        <a href="/vue.html">
+            <input type="button" value="Note Tes Profs"></input>
+        </a>
+        <div class="matieres">
+
+            <div class="matiere" v-for="(profs, matiere) in matieres" :key="matiere">
+                <h3 class="title">
+                    {{matiere}}
+                </h3>
+                <div class="professeurs">
+                    <div class="professeur" v-for="(prof, index) in profs" :key="index">
+                        {{prof.nom}} {{prof.prenom}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script>
+            Vue.createApp({
+                data() {
+                    return {
+                        baseUrl: "http://localhost:8000",
+                        matieres: []
+                    };
+                },
+                methods: {
+                    getMatieres: async function () {
+                        const response = await axios.get(`${this.baseUrl}/api/matiere/professeurs`);
+                        return response.data;
+                    }
+                },
+                mounted: async function () {
+                    this.matieres = await this.getMatieres();
+                    console.log(this.matieres);
+                }
+            }).mount('#app');
+        </script>
 </body>
 
 </html>
