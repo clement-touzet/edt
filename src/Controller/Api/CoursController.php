@@ -42,7 +42,7 @@ class CoursController extends AbstractController
         // return 
     }
 
-    #[Route('{id}/create-note', name: 'create_note', methods: ['POST'])]
+    #[Route('/{id}/create-note', name: 'create_note', methods: ['POST'])]
     public function createNote(Cours $cours, Request $request, NoteCoursRepository $repo, ValidatorInterface $validator)
     {
         $data = json_decode($request->getContent(), true);

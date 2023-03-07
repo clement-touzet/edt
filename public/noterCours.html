@@ -58,12 +58,13 @@
                         emailEtudiant: "",
                     },
                     errors: [],
+                    coursId: null,
                 };
             },
             methods: {
                 addNoteCours: function () {
                     resetErrors();
-                    axios.post(`${this.baseUrl}/api/notecours/${this.cours.id}/create`, this.nouvelleNote)
+                    axios.post(`${this.baseUrl}/api/cours/${this.coursId}/create-note`, this.nouvelleNote)
                         .then(response => {
                             this.cours.push(response.data);
                             this.noteCours = this.createNoteCours();
@@ -73,6 +74,15 @@
                 resetErrors: function () {
                     this.errors = [];
                 },
+            },
+            mounted: async function () {
+                const queryString = window.location.search;
+                const urlParams = new URLSearchParams(queryString);
+                this.coursId = urlParams.get('coursId');
+                console.log(this.coursId)
+                if (!this.coursId) {
+                    alert("Aucun cours n'a été sélectionné")
+                }
             }
         }).mount('#app');
     </script>
