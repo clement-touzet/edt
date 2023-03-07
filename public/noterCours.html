@@ -9,7 +9,7 @@
 </head>
 
 <body>
-    <div class="app">
+    <div id="app" class="app">
         <form class="" v-on:submit.prevent="addNoteCours()">
             <div class="form-group">
                 <label for="note">Note</label>
@@ -51,7 +51,7 @@
         Vue.createApp({
             data() {
                 return {
-                    baseUrl: "localhost:8000",
+                    baseUrl: "http://localhost:8000",
                     nouvelleNote: {
                         note: 0,
                         commentaire: "",
@@ -63,13 +63,16 @@
             },
             methods: {
                 addNoteCours: function () {
-                    resetErrors();
+                    this.resetErrors();
                     axios.post(`${this.baseUrl}/api/cours/${this.coursId}/create-note`, this.nouvelleNote)
                         .then(response => {
-                            this.cours.push(response.data);
-                            this.noteCours = this.createNoteCours();
+                            console.log("response api", response);
+                            window.location.href = '/notesCours.html' + '?coursId=' + this.coursId;
                         })
-                        .catch(error => this.errors = Object.values(error.response.data));
+                        .catch(error => {
+                            console.log(error);
+                            this.errors = Object.values(error.response.data)
+                        });
                 },
                 resetErrors: function () {
                     this.errors = [];
