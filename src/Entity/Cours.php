@@ -20,29 +20,18 @@ class Cours implements \JSONSerializable
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     #[Assert\Type("\DateTimeInterface")]
     #[Assert\Expression('this.pauseDej() == true', message: '')]
-
-    //TODO: essayer de faire en sorte qu'un cours ne puisse pas être programmé sur deux jours différents et qu'il respecte les horaires 8h-18h
-    //Problème rencontré: la fonction Range sur une date ne récupère que la date du jour donc on ne peut pas programmer dans le futur
-
-
-    // #[Assert\Range(min: "8am", max: "5pm", notInRangeMessage:"Les cours commencent à min: 8h et max: 17h")]
-    // #[Assert\Range(min: '8am',max: '+9 hours')]
+    #[Assert\Expression('this.verifDateHeureDebut() == true', message: 'Les cours commencent à partir de 8h')]
     private ?\DateTimeInterface $dateHeureDebut = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     #[Assert\Type("\DateTimeInterface")]
     #[Assert\GreaterThan(propertyPath:"dateHeureDebut", message:"La date de fin ne peut pas être inférieure à la date de début")]
     #[Assert\Expression('this.pauseDej() == true', message: 'Attention, les cours ne peuvent pas empiéter sur la pause du midi')]
-    //TODO: essayer de faire en sorte qu'un cours ne puisse pas être programmé sur deux jours différents et qu'il respecte les horaires 8h-18h
-    //Problème rencontré: la fonction Range sur une date ne récupère que la date du jour donc on ne peut pas programmer dans le futur
-
-    // #[Assert\Range(min: "9am", max: "6pm", notInRangeMessage:"Les cours finissent à min: 9h et max: 18h")]
-    // #[Assert\Range(min: '9am',max: '+9 hours', notInRangeMessage:"Les cours ne peuvent pas être sur plusieurs jours")]
-
+    #[Assert\Expression('this.dureeCoursValide() == true', message: 'La durée du cours est trop longue')]
+    #[Assert\Expression('this.verifDateHeureFin() == true', message: 'Les cours finissent à 18h')]
     private ?\DateTimeInterface $dateHeureFin = null;
 
     #[ORM\Column(length: 255)]
-    
     private ?string $type = null;
 
     #[ORM\ManyToOne(inversedBy: 'cours')]
@@ -67,6 +56,23 @@ class Cours implements \JSONSerializable
 
     /* METHODES CUSTOM POUR ASSERT */
 
+    /* verifDateHeureFin sert à vérifier que les cours se terminent bien à 18h et pas après */
+    public function verifDateHeureFin(): bool
+    {
+        return (\DateTime::createFromFormat('Y-m-d H-i-s',$this->getDateHeureFin()->format('Y-m-d H-i-s'))
+        ->diff((\DateTime::createFromFormat('Y-m-d H-i-s',$this->getDateHeureFin()->format('Y-m-d H-i-s')))
+        ->setTime(0,0,0)))->h > 18 ? false:true;
+    }
+
+    /* verifDateHeureDebut sert à vérifier que les cours commencent à partir de 8h */
+    public function verifDateHeureDebut(): bool
+    {
+        return (\DateTime::createFromFormat('Y-m-d H-i-s',$this->getDateHeureDebut()->format('Y-m-d H-i-s'))
+        ->diff((\DateTime::createFromFormat('Y-m-d H-i-s',$this->getDateHeureDebut()->format('Y-m-d H-i-s')))
+        ->setTime(0,0,0)))->h < 8 ? false:true;
+
+    }
+
     /* verifMatiereProfesseur vérifie que le professeur assigné au cours est bien prof dans la matière du cours */
     public function verifMatiereProfesseur(): bool
     {
@@ -78,19 +84,40 @@ class Cours implements \JSONSerializable
         return false;
     }
 
+    /* pauseDej qui vérifie que les cours ne sont pas programmés pendant la pause déjeuner  */
     public function pauseDej():bool
     {
+        //$intervalDeb et fin c'est l'heure du cours (qu'on a choisit) -> en date yyyy-mm-dd-h-i-s
         $intervalDebut = \DateTime::createFromFormat('Y-m-d H:i:s', $this->getDateHeureDebut()->format('Y-m-d H:i:s')) 
         -> diff((\DateTime::createFromFormat('Y-m-d H:i:s', $this->getDateHeureDebut()->format('Y-m-d H:i:s'))->setTime(0,0,0)));
 
         $intervalFin = \DateTime::createFromFormat('Y-m-d H:i:s', $this->getDateHeureFin()->format('Y-m-d H:i:s')) 
         ->diff((\DateTime::createFromFormat('Y-m-d H:i:s', $this->getDateHeureFin()->format('Y-m-d H:i:s'))->setTime(0,0,0)));
 
-        $midi = $intervalDebut->h*60+$intervalDebut->i;
-        $quartorzeHeure = $intervalFin->h*60+$intervalFin->i;
+        //dureeDeb et fin <=> l'heure du cours en minute
+        $dureeDebut = $intervalDebut->h*60+$intervalDebut->i;
+        $dureeFin = $intervalFin->h*60+$intervalFin->i;
 
-        return ($midi < 750 && $quartorzeHeure > 750) || ($midi > 750 && $quartorzeHeure < 840)? false : true;
+        //750 -> 12h30, 840 -> 14h
+        //on vérifie que le cours commence pas pdt pause et si il commence avant, on vérifie qu'il finie pas pendant ou après
+        //on peut pas créer un cours qui comment à 11h59 et finir 14h01
+        return ($dureeDebut < 750 && $dureeFin > 750) || ($dureeDebut > 750 && $dureeFin < 840)? false : true;
     }
+
+    /* dureeCoursValide sert à vérifier que la durée qu'un cours soit valide. Elle sert à éviter qu'on puisse programmer un cours d'un jour
+        à l'autre 
+        - fonctionnement similaire au pauseDej*/
+    public function dureeCoursValide():bool
+    {
+        $interval = \DateTime::createFromFormat('Y-m-d H:i:s', $this->getDateHeureDebut()->format('Y-m-d H:i:s'))
+        ->diff(\DateTime::createFromFormat('Y-m-d H:i:s', $this->getDateHeureFin()->format('Y-m-d H:i:s')));
+        $length = $interval->i + $interval->h*60 + $interval->d*24*60;
+        
+        //on vérifie que la durée d'un cours ne dépasse pas 5 heures
+        return $length > 300 ? false:true;
+    }
+
+    /* FIN METHODES CUSTOM */
 
     public function __construct()
     {
@@ -222,4 +249,3 @@ class Cours implements \JSONSerializable
         return $this;
     }
 }
-?>
