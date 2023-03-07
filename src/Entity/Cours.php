@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\CoursRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -55,6 +57,19 @@ class Cours implements \JSONSerializable
     #[ORM\JoinColumn(nullable: false)]
     #[Assert\NotBlank]
     private ?Salle $salle = null;
+
+    #[ORM\OneToMany(mappedBy: 'cours', targetEntity: NoteCours::class)]
+    private Collection $noteCours;
+
+    public function __construct()
+    {
+        $this->noteCours = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return sprintf('%s - %s - %s', $this->getType(), $this->getMatiere(), $this->getProfesseur());
+    }
 
     public function getId(): ?int
     {
@@ -144,6 +159,36 @@ class Cours implements \JSONSerializable
             'professeur' => $this->getProfesseur(),
             'salle' => $this->getSalle(),
         ];
+    }
+
+    /**
+     * @return Collection<int, NoteCours>
+     */
+    public function getNoteCours(): Collection
+    {
+        return $this->noteCours;
+    }
+
+    public function addNoteCour(NoteCours $noteCour): self
+    {
+        if (!$this->noteCours->contains($noteCour)) {
+            $this->noteCours->add($noteCour);
+            $noteCour->setCours($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNoteCour(NoteCours $noteCour): self
+    {
+        if ($this->noteCours->removeElement($noteCour)) {
+            // set the owning side to null (unless already changed)
+            if ($noteCour->getCours() === $this) {
+                $noteCour->setCours(null);
+            }
+        }
+
+        return $this;
     }
 }
 ?>
