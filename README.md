@@ -8,11 +8,19 @@
 
 ### Cours
 
-Pour obtenir la liste de tous les cours:
-/api/cours
+Liste de tous les cours:
+[/api/cours](http://localhost:8000/api/cours)
 
-    Obtenir la liste des cours pour une date précise
-    /api/cours/cours-from-date?annee=aaaa&mois=mm&jour=jj
+```
+http://localhost:8000/api/cours
+```
+
+Liste des cours pour une date précise
+/api/cours/cours-from-date?annee=AAAA&mois=MM&jour=JJ
+
+```
+[http://localhost:8000/api/cours/cours-from-date?annee=2023&mois=03&jour=04](http://localhost:8000/api/cours/cours-from-date?annee=2023&mois=03&jour=04)
+```
 
 ### Salles
 
