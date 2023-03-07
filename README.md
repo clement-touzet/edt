@@ -3,18 +3,32 @@
 /** PROCESS D'INSTALLATION DU PROJET **/
 
 /** DEFINITION DES POINTS D'ENTREE DE L'API**/
---- Cours
+## Cours
 Pour obtenir la liste de tous les cours:
 /api/cours
 
     Obtenir la liste des cours pour une date précise
     /api/cours/cours-from-date?annee=aaaa&mois=mm&jour=jj
 
---- Salles
+## Salles
 Pour obtenir la liste des salles
 /api/salles
 
 /** VALIDATEURS AJOUTES **/
+## Cours
+dateHeureDebut:  
+    #[Assert\Type("\DateTimeInterface")] //pour être sûr qu'on reçoit le bon type de date
+
+dateHeureFin:
+    #[Assert\GreaterThan(propertyPath:"dateHeureDebut", message:"La date de fin ne peut pas être inférieure à la date de début")] //Pour s'assurer que la date de fin d'un cours est supérieure à la date de début (évite de faire des cours qui commencent le 06 et finissent le 05)
+
+type:
+    #[Assert\Choice(['TD','TP','Cours'])] //On s'assure que le choix TD, TP ou cours est imposé
+
+professeur, salle et matiere: 
+     #[Assert\NotBlank] //Pour être sûr que les champs soient bien remplis
+
+
 
 /** CHOIX TECHNIQUES ET POURQUOI **/
 
