@@ -19,7 +19,7 @@ class CoursCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
-            FormField::addTab('Informations du cours'),
+            FormField::addPanel('Informations du cours'),
             AssociationField::new('matiere')
             ->setFormTypeOptions(['by_reference' => false]),
             
@@ -29,7 +29,7 @@ class CoursCrudController extends AbstractCrudController
                 'Cours' => 'Cours',
             ]),
 
-            FormField::addTab('Programmation du cours'),
+            FormField::addPanel('Programmation du cours'),
             'dateHeureDebut',
             'dateHeureFin',
             AssociationField::new('professeur')
