@@ -50,7 +50,7 @@ class Cours implements \JSONSerializable
     #[Assert\NotBlank]
     private ?Salle $salle = null;
 
-    #[ORM\OneToMany(mappedBy: 'cours', targetEntity: NoteCours::class)]
+    #[ORM\OneToMany(mappedBy: 'cours', targetEntity: NoteCours::class, orphanRemoval:true)]
     private Collection $noteCours;
 
 
