@@ -110,6 +110,11 @@ numero:
 
 # Choix techniques et pourquoi
 
+## CRUD
+### Cours
+Lorsque l'on supprime un objet qui compose un cours (un professeur, une matière ou une salle), le cours est supprimé.
+
+
 # Fonctionnalitées aditionnelles
 
 ### Page matieres.html
