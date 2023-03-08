@@ -53,13 +53,20 @@ dateHeureDebut et dateHeureFin:
   
 dateHeureDebut:
  `#[Assert\Expression('this.pauseDej() == true', message: '')]`
-  `#[Assert\Expression('this.verifDateHeureDebut() == true', message: 'Les cours commencent à partir de 8h')]`
+ `//la fonction pauseDej() s'assure que les horaires de cours ne soient pas entre midi et 14h`
+
+ `#[Assert\Expression('this.verifDateHeureDebut() == true', message: 'Les cours commencent à partir de 8h')]`
+ `//la fonction verifDateHeureDebut s'assure que les cours commencent à partir de 8h`
 
 dateHeureFin: 
   `#[Assert\GreaterThan(propertyPath: "dateHeureDebut", message: "La date de fin ne peut pas être inférieure à la date de début")]`
   `#[Assert\Expression('this.pauseDej() == true', message: 'Attention, les cours ne peuvent pas empiéter sur la pause du midi')]`
+
   `#[Assert\Expression('this.dureeCoursValide() == true', message: 'La durée du cours est trop longue')]`
+  `//la fonction dureeCoursValide vérifie que la durée d'un cours ne soit pas trop long: permet d'éviter les cours qui commencent le 08/03 et qui finissent le 09/03`
+  
   `#[Assert\Expression('this.verifDateHeureFin() == true', message: 'Les cours finissent à 18h')]`
+  `//verifDateHeureFin, même principe que verifDateHeureDebut mais pour la fin des cours qui est à 18h`
 
 type:
   `#[Assert\Choice(['TD','TP','Cours'])] //On s'assure que le choix TD, TP ou cours est imposé`
