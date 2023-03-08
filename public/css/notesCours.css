@@ -1,3 +1,7 @@
+* {
+  font-family: "Roboto", sans-serif;
+}
+
 input[type="button"] {
   background-color: #ff8494;
   border: none;
@@ -14,4 +18,41 @@ input[type="button"] {
 
 input[type="button"]:hover {
   background-color: #ffa9b7;
+}
+.title {
+  font-size: 20px;
+  color: #ff8494;
+  margin: 20px 0 0 0;
+}
+.border-b {
+  border-bottom: 1px solid #e3d4d4;
+}
+
+.notes {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.note {
+  width: 90%;
+  margin-bottom: 10px;
+}
+
+.professeur {
+  font-size: 16px;
+  margin: 10px 0;
+  color: #4f4f4f;
+}
+
+.noteEtudiant {
+  font-size: x-large;
+}
+
+p {
+  margin: 3px 0;
+}
+
+.toutesLesNotes {
+  margin-top: 30px;
 }

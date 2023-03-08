@@ -10,11 +10,46 @@
 </head>
 
 <body>
-    Notes du cours 1....
     <div class="app" id="app">
-        <!-- affiche toutes les notes si id = null sinon affiche les notes du cours coursId -->
-        <div class="displayAllNotes" v-if="coursId">
-            <input type="button" value="displayAll" @click="displayAllCours()" />
+        <h1> Notes des cours </h1>
+
+        <div class="selectDate">
+            <label for="coursDate">Date du cours a afficher </label>
+            <input type="date" id="coursDate" name="coursDate" />
+        </div>
+
+
+
+        <div class="toutesLesNotes">
+            <div class="" v-if="cours.length == 0">Aucun cours</div>
+            <div class="" v-if="chargement"> Chargement</div>
+            <div class="" v-for="(cour, index) in cours" :key="index">
+                <h3 class="title">
+                    {{cour.matiere.titre}}
+                    {{formatClassesDate(cour.dateHeureDebut.date)}}h -
+                    {{formatClassesDate(cour.dateHeureFin.date)}}h
+                </h3>
+                <p>Moyenne : {{calculMoyenne(cour.notes)}}</p>
+                <div class="notes">
+                    <div class="note border-b" v-for="(note, index) in cour.notes" :key="index">
+
+                        <div class="noteEmail ">
+                            <p>{{note.emailEtudiant}}</p>
+
+                        </div>
+                        <div class="noteEtudiant">
+                            <p> {{note.note}} / 5</p>
+
+                        </div>
+                        <div class="noteCommentaire">
+                            <p>{{note.commentaire}}</p>
+
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="cours">
 
@@ -35,37 +70,36 @@
                     errors: [],
                     coursId: null,
                     cours: [],
+                    chargement: true,
                 };
             },
             methods: {
-                displayAllCours: function () {
-                    axios.get(this.baseUrl + '/api/cours')
+                displayCoursDateSelected: function (jour, mois, annee) {
+                    this.chargement = true;
+                    axios.get(`${this.baseUrl}/api/cours/cours-from-date?annee=${annee}&mois=${mois}&jour=${jour}`)
                         .then(response => {
-                            console.log(response.data);
+                            console.log("cours du jour", response.data);
                             this.cours = response.data;
                         })
                         .catch(error => {
                             console.log(error);
+                        })
+                        .finally(() => {
+                            this.chargement = false;
                         });
                 },
                 displayOneCours: async function () {
+                    this.chargement = true;
                     try {
-                        let coursNotes = await getOneCoursNotes();
-                        let cours = await getOneCours();
-                        let coursName = cours.matiere.titre;
-                        this.cours = {
-                            [coursName]: coursNotes,
-                        }
+                        this.cours = [await this.getOneCours()];
                     }
                     catch (error) {
                         console.log(error);
                         alert("Erreur lors de la récupération des notes du cours selectionné")
                     }
-                },
-                getOneCoursNotes: async function () {
-                    let response = await axios.get(`${this.baseUrl}/api/cours/${this.coursId}/notes`)
-                    console.log(response.data);
-                    return response.data;
+                    finally {
+                        this.chargement = false;
+                    }
                 },
 
                 getOneCours: async function () {
@@ -77,8 +111,18 @@
                         console.log(error);
                         alert("Erreur lors de la récupération du cours selectionné")
                     }
-                }
-
+                },
+                formatClassesDate: function (date) {
+                    return new Date(date).toLocaleTimeString("fr-FR", { hour: '2-digit', minute: '2-digit' });
+                },
+                calculMoyenne: function (notes) {
+                    if (notes.length === 0) return "Pas de notes";
+                    let somme = 0;
+                    for (let i = 0; i < notes.length; i++) {
+                        somme += notes[i].note;
+                    }
+                    return somme / notes.length;
+                },
             },
             mounted: async function () {
                 const queryString = window.location.search;
@@ -94,8 +138,9 @@
                     this.displayOneCours();
                 }
                 else {
-                    console.log("displayAllCours")
-                    this.displayAllCours();
+                    console.log("displayTodayCours")
+                    let date = new Date();
+                    this.displayCoursDateSelected(date.getDay(), date.getMonth() + 1, date.getFullYear());
                 }
             }
 
