@@ -15,14 +15,14 @@
 
         <div class="selectDate">
             <label for="coursDate">Date du cours a afficher </label>
-            <input type="date" id="coursDate" name="coursDate" />
+            <input type="date" id="coursDate" name="coursDate" v-model="dateNotesToDisplay" @change="dayChanged()" />
         </div>
 
 
 
         <div class="toutesLesNotes">
-            <div class="" v-if="cours.length == 0">Aucun cours</div>
             <div class="" v-if="chargement"> Chargement</div>
+            <div class="" v-else-if="cours.length == 0">Aucun cours</div>
             <div class="" v-for="(cour, index) in cours" :key="index">
                 <h3 class="title">
                     {{cour.matiere.titre}}
@@ -71,11 +71,13 @@
                     coursId: null,
                     cours: [],
                     chargement: true,
+                    dateNotesToDisplay: null,
                 };
             },
             methods: {
                 displayCoursDateSelected: function (jour, mois, annee) {
                     this.chargement = true;
+                    console.log("displayCoursDateSelected", jour, mois, annee)
                     axios.get(`${this.baseUrl}/api/cours/cours-from-date?annee=${annee}&mois=${mois}&jour=${jour}`)
                         .then(response => {
                             console.log("cours du jour", response.data);
@@ -123,6 +125,11 @@
                     }
                     return somme / notes.length;
                 },
+                dayChanged: function () {
+                    console.log("dayChanged", this.dateNotesToDisplay)
+                    let [annee, mois, jour] = this.dateNotesToDisplay.split("-");
+                    this.displayCoursDateSelected(jour, mois, annee)
+                }
             },
             mounted: async function () {
                 const queryString = window.location.search;
@@ -140,7 +147,10 @@
                 else {
                     console.log("displayTodayCours")
                     let date = new Date();
-                    this.displayCoursDateSelected(date.getDay(), date.getMonth() + 1, date.getFullYear());
+                    this.displayCoursDateSelected(date.getDate(), date.getMonth() + 1, date.getFullYear());
+                    this.dateNotesToDisplay = new Date().toISOString().slice(0, 10)
+
+                    console.log(this.dateNotesToDisplay, "dateNotesToDisplay")
                 }
             }
 
