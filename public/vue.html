@@ -89,7 +89,7 @@
                             <br />
                             {{unAvis.commentaire}}
                         </p>
-                        <button @click="deleteAvis(avis)" class="btn btn-danger mt-5">
+                        <button @click="deleteAvis(unAvis)" class="btn btn-danger mt-5">
                             Supprimer
                         </button>
                     </div>
@@ -151,6 +151,7 @@
                 deleteAvis: function (avis) {
                     axios.delete(`${this.apiBase}/avis/${avis.id}`).then(
                         response => {
+                            console.log(response)
                             this.avis.splice(this.avis.indexOf(avis), 1)
                         }
                     ).catch(error => {
