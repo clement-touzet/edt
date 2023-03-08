@@ -6,9 +6,12 @@ use App\Repository\NoteCoursRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
 
 
 #[ORM\Entity(repositoryClass: NoteCoursRepository::class)]
+#[UniqueEntity(fields: ['cours', 'emailEtudiant'], errorPath: 'emailEtudiant', message: 'Cet étudiant à déjà noté ce cours.')]
 class NoteCours implements \JsonSerializable
 {
     #[ORM\Id]
@@ -24,6 +27,7 @@ class NoteCours implements \JsonSerializable
     private ?string $commentaire = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Email]
     private ?string $emailEtudiant = null;
 
     #[ORM\ManyToOne(inversedBy: 'noteCours')]
