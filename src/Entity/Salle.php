@@ -21,7 +21,7 @@ class Salle implements \JSONSerializable
     #[Assert\NotBlank]
     private ?int $numero = null;
 
-    #[ORM\OneToMany(mappedBy: 'salle', targetEntity: Cours::class)]
+    #[ORM\OneToMany(mappedBy: 'salle', targetEntity: Cours::class, orphanRemoval: true)]
     private Collection $cours;
 
     public function __construct()
