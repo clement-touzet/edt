@@ -1,0 +1,43 @@
+a {
+  text-decoration: none;
+}
+
+input[type="button"],
+input[type="submit"] {
+  background-color: #ff8494;
+  border: none;
+  color: #fff;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+input[type="button"]:hover,
+input[type="submit"]:hover {
+  background-color: #ffa9b7;
+}
+
+.chipMatiere {
+  background-color: #ffe9ec;
+  border-radius: 5px;
+  padding: 1px 3px;
+  color: #ff8494;
+  text-decoration: none;
+}
+.chipMatiere:hover {
+  background-color: #ffdfe2;
+  cursor: pointer;
+}
+
+.matieres {
+  text-decoration: none;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 5px;
+}
