@@ -19,6 +19,11 @@ Liste des cours pour une date précise: [/api/cours/cours-from-date?annee=AAAA&m
 http://localhost:8000/api/cours/cours-from-date?annee=2023&mois=03&jour=04
 ```
 
+Obtenir un cours en fonction d'un id : /api/cours/{id}
+méthode : GET
+
+Créer une note en fonction de l'id d'un cours: /api/cours/{id}/create-note
+
 ### Salles
 
 Liste des salles
@@ -47,65 +52,74 @@ http://localhost:8000/api/matiere/professeurs
 ### Cours
 
 ```
-dateHeureDebut et dateHeureFin:  
+dateHeureDebut et dateHeureFin:
  #[Assert\Type("\DateTimeInterface")] //pour être sûr qu'on reçoit le bon type de date
-```  
+```
 
-```  
+```
 dateHeureDebut:
  #[Assert\Expression('this.pauseDej() == true', message: '')]
  //la fonction pauseDej() s'assure que les horaires de cours ne soient pas entre midi et 14h
- 
+
  #[Assert\Expression('this.verifDateHeureDebut() == true', message: 'Les cours commencent à partir de 8h')]
  //la fonction verifDateHeureDebut s'assure que les cours commencent à partir de 8h
-``` 
-``` 
-dateHeureFin: 
+```
+
+```
+dateHeureFin:
   #[Assert\GreaterThan(propertyPath: "dateHeureDebut", message: "La date de fin ne peut pas être inférieure à la date de début")]
   #[Assert\Expression('this.pauseDej() == true', message: 'Attention, les cours ne peuvent pas empiéter sur la pause du midi')]
 
   #[Assert\Expression('this.dureeCoursValide() == true', message: 'La durée du cours est trop longue')]
   //la fonction dureeCoursValide vérifie que la durée d'un cours ne soit pas trop long: permet d'éviter les cours qui commencent le 08/03 et qui finissent le 09/03
-  
+
   #[Assert\Expression('this.verifDateHeureFin() == true', message: 'Les cours finissent à 18h')]
   //verifDateHeureFin, même principe que verifDateHeureDebut mais pour la fin des cours qui est à 18h
-``` 
-``` 
+```
+
+```
 type:
   #[Assert\Choice(['TD','TP','Cours'])] //On s'assure que le choix TD, TP ou cours est imposé
-``` 
-``` 
-professeur: 
-  #[Assert\Expression('this.verifMatiereProfesseur()==true', message: 'Vous ne pouvez pas attribuer un professeur à un cours dont il n\'enseigne pas la matière')] 
-``` 
-``` 
-professeur, salle et matiere: 
+```
+
+```
+professeur:
+  #[Assert\Expression('this.verifMatiereProfesseur()==true', message: 'Vous ne pouvez pas attribuer un professeur à un cours dont il n\'enseigne pas la matière')]
+```
+
+```
+professeur, salle et matiere:
     #[Assert\NotBlank]
-``` 
+```
+
 ### Avis
-``` 
+
+```
 note:
     `#[Assert\Range(min: 0, max: 5)]`
 
-commentaire: 
+commentaire:
     `#[Assert\NotBlank]`
 
 emailEtudiant:
-    `#[Assert\Email]`    
-``` 
+    `#[Assert\Email]`
+```
 
 ### NoteCours
-``` 
+
+```
 note:
-    `#[Assert\Range(min: 0, max: 5)]` 
-commentaire: 
+    `#[Assert\Range(min: 0, max: 5)]`
+commentaire:
     `#[Assert\NotBlank]`
 
 emailEtudiant:
-    `#[Assert\Email]`  
-``` 
+    `#[Assert\Email]`
+```
+
 ### Professeur
-``` 
+
+```
 nom:
     `#[Assert\NotBlank]`
 
@@ -114,25 +128,30 @@ prenom:
 
 email:
     `#[Assert\Email]`
-``` 
+```
+
 ### Salle
-``` 
+
+```
 numero:
     `#[Assert\NotBlank]`
-``` 
+```
 
 # Choix techniques et pourquoi
 
 ## CRUD
+
 ### Cours
+
 Lorsque l'on supprime un objet qui compose un cours (un professeur, une matière ou une salle), le cours est supprimé.
-En effet, un cours qui n'a pas de professeur ou pas de matière ou pas de salle ne doit pas exister. 
+En effet, un cours qui n'a pas de professeur ou pas de matière ou pas de salle ne doit pas exister.
 Ce n'est pas logique d'avoir un cours qui n'a pas l'un de ces trois éléments
 
 ### NoteCours
+
 Pour noter un cours, nous avons préféré créer une table NoteCours reliée à la table Cours.
 Nous avons essayé de relier la table Avis à Cours et nous sommes rendu compte qu'il y allait avoir des conflits
-de propriété (par exemple commentaire qui était le même pour professeur et cours). 
+de propriété (par exemple commentaire qui était le même pour professeur et cours).
 
 De plus, nous avons eu l'idée de rajouter des champs spécifiques au cours plus tard.
 On pourrait par exemple évaluer les conditions de travail, est-ce que le matériel, les documents et autre ressources mises à disposition sont satisfaisantes.
@@ -145,8 +164,16 @@ C'est pour cela qu'il nous a semblé plus judicieux de séparer l'avis d'un prof
 
 Affiche chaque matières et leurs profs
 
-# Implémenté mais ne fonctionne pas
+### Page salles.html
 
+Affiche la liste des salles. En en selectionnant une, cela affichera la liste des cours du jours sélectionné pour la salle correspondante
+
+### Page notesCours.html
+
+Affiche la liste des note des cours pour le jour selectionnés. Affiche aussi la moyenne des notes pour un cours.
+La page prend en argument dans l'url un coursId qui permet d'afficher les notes d'un seul cours (C'est sensé être utiliser après l'ajout d'une note à un cours)
+
+# Implémenté mais ne fonctionne pas
 
 # Problèmes rencontrés et difficultés
 
@@ -160,8 +187,7 @@ Nous voulions utiliser la meme table Avis que pour noter un prof mais cela cause
 
 ### Assert des cours
 
-Nous avons voulu utiliser les méthodes disponibles dans symfony par exemple:
-#[Assert\GreaterThan]
+Nous avons voulu utiliser les méthodes disponibles dans symfony par exemple: #[Assert\GreaterThan]
 Pour gérer les assert sur les horaires de cours et on a été vite limité.
 Nous avons donc dû faire des fonctions customisées que l'on appelle dans l'assert.
 
