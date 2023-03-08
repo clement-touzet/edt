@@ -149,12 +149,6 @@ Affiche chaque matières et leurs profs
 
 # Implémenté mais ne fonctionne pas
 
-Pour essayer de faire des expressions: pour faire des Assert sur les dates, j'ai ajouté le package expression-language
-
-composer require symfony/expression-language
-
-MARCHE PAS donc j'en suis restée à la vérification suivante:
-Un cours ne peux pas commencer aujourd'hui et finir hier
 
 # Problèmes rencontrés et difficultés
 
@@ -165,5 +159,12 @@ Pour la navigation entre les pages, mettre dans une div un @click qui exécute u
 ### Note d'un cours
 
 Nous voulions utiliser la meme table Avis que pour noter un prof mais cela cause des problèmes de conflits au niveau de la db.
+
+### Assert des cours
+
+Nous avons voulu utiliser les méthodes disponibles dans symfony par exemple:
+#[Assert\GreaterThan]
+Pour gérer les assert sur les horaires de cours et on a été vite limité.
+Nous avons donc dû faire des fonctions customisées que l'on appelle dans l'assert.
 
 # AUTRE
