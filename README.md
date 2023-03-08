@@ -2,8 +2,6 @@
 
 # Process d'installation du projet
 
-# DEFINITION DES POINTS D'ENTREE DE L'API
-
 # Définition des points d'entrees de l'API
 
 ### Cours
