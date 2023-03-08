@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="./css/salles.css" rel="stylesheet" />
+    <title>Liste des salles</title>
+</head>
+
+<body>
+    <div class="" id="app">
+        <a href="/">
+            <input type="button" value="Accueil"></input>
+        </a>
+        <h1>Liste des salles</h1>
+        <h3>Sélectionnez le numéro de la salle</h3>
+        <div class="salles">
+            <div class="card" :class="{cardActive:salle.id == idSalleSellected}" v-for="(salle, index) in salles"
+                :key="index" @click="setSelectedSalle(salle.id)">
+                <div class="salle">
+                    <p>{{salle.numero}}</p>
+                </div>
+            </div>
+        </div>
+        <div class="selectedSalle" v-if="idSalleSellected">
+            <div class="selectDate">
+                <label for="coursDate">Cours de la salle numéro {{idSalleSellected}} du: </label>
+                <input type="date" id="coursDate" name="coursDate" v-model="dateSelected" @change="onDayChanged()" />
+            </div>
+            <div class="cours" v-if="cours">
+                <div class="noSelectedDate" v-if="!dateSelected">
+                    <p>Veuillez sélectionner une date</p>
+                </div>
+                <div v-for="(cour, index) in cours" :key="index">
+                    <div class="cardInformation" v-if="cour.salle.numero == idSalleSellected">
+                        <div class="cour">
+                            <h3>{{cour.matiere.titre}} | {{formatClassesDate(cour.dateHeureDebut.date)}} à
+                                {{formatClassesDate(cour.dateHeureFin.date)}} </h3>
+                            <p>{{cour.professeur.nom}} {{cour.professeur.prenom}} </p>
+                            <p>{{cour.type}}</p>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        Vue.createApp({
+            data() {
+                return {
+                    baseUrl: "http://localhost:8000",
+                    salles: [],
+                    idSalleSellected: null,
+                    dateSelected: null,
+                    cours: []
+                };
+            },
+            methods: {
+                getSalles: async function () {
+                    const response = await axios.get(`${this.baseUrl}/api/salles`);
+                    return response.data;
+                },
+                setSelectedSalle: function (idSalle) {
+                    this.idSalleSellected = idSalle;
+                },
+                getCoursFromDate: async function (annee, mois, jour) {
+                    const response = await axios.get(`${this.baseUrl}/api/cours/cours-from-date?annee=${annee}&mois=${mois}&jour=${jour}`)
+                    return response.data;
+                },
+                getDateFromDateSelected: async function () {
+                    let [annee, mois, jour] = this.dateSelected.split("-");
+                    let date = new Date(annee, mois - 1, jour);
+                    console.log("date créer :", date);
+                },
+                onDayChanged: async function () {
+                    console.log("dayChanged", this.dateSelected)
+                    let [annee, mois, jour] = this.dateSelected.split("-");
+                    this.cours = await this.getCoursFromDate(annee, mois, jour);
+                    console.log("cours", this.cours);
+                },
+                formatClassesDate: function (date) {
+                    return new Date(date).toLocaleTimeString("fr-FR", { hour: '2-digit', minute: '2-digit' });
+                },
+            },
+            mounted: async function () {
+                this.salles = await this.getSalles();
+            },
+        }).mount('#app');
+    </script>
+</body>
+
+</html>
