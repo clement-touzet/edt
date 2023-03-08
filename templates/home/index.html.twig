@@ -1,20 +1,28 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello HomeController!{% endblock %}
+{% block title %}Calendrier - CAZENAVE - TOUZET{% endblock %}
 
 {% block body %}
 <style>
     .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
     .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+
+    .container { text-align: center; height: 200px; position: relative;}
+    .center {display: flex; justify-content: center; align-items: center; height: 200px;}
+    .buttonSubmit { background: #ff8494; border: 1px solid #ffa9b7; border-radius: 10px; width: 70%; height: 100px}
+    .col{}
 </style>
 
-<div class="example-wrapper">
-    <h1>Bienvenue</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/Users/mcazenave009/dev-perso/projetSymfony/edt/edt/src/Controller/HomeController.php'|file_link(0) }}">src/Controller/HomeController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/Users/mcazenave009/dev-perso/projetSymfony/edt/edt/templates/home/index.html.twig'|file_link(0) }}">templates/home/index.html.twig</a></code></li>
-    </ul>
-</div>
+<body>
+    <div class="container">
+        <div class="center">
+            <div class="col">
+                <a href="/cours.html"><button class="buttonSubmit" type="submit">Calendrier</button></a>
+            </div>
+            <div class="col">
+                <a  href="/vue.html"><button class="buttonSubmit" type="submit">Note ton prof</button></a>
+            </div>    
+        </div>
+    </div>
+</body>
 {% endblock %}
