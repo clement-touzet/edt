@@ -113,7 +113,18 @@ numero:
 ## CRUD
 ### Cours
 Lorsque l'on supprime un objet qui compose un cours (un professeur, une matière ou une salle), le cours est supprimé.
+En effet, un cours qui n'a pas de professeur ou pas de matière ou pas de salle ne doit pas exister. 
+Ce n'est pas logique d'avoir un cours qui n'a pas l'un de ces trois éléments
 
+### NoteCours
+Pour noter un cours, nous avons préféré créer une table NoteCours reliée à la table Cours.
+Nous avons essayé de relier la table Avis à Cours et nous sommes rendu compte qu'il y allait avoir des conflits
+de propriété (par exemple commentaire qui était le même pour professeur et cours). 
+
+De plus, nous avons eu l'idée de rajouter des champs spécifiques au cours plus tard.
+On pourrait par exemple évaluer les conditions de travail, est-ce que le matériel, les documents et autre ressources mises à disposition sont satisfaisantes.
+L'étudiant a-t'il rencontré des difficultés pendant ce cours etc...
+C'est pour cela qu'il nous a semblé plus judicieux de séparer l'avis d'un professeur et l'avis d'un cours.
 
 # Fonctionnalitées aditionnelles
 
