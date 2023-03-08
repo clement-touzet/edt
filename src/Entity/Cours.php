@@ -32,6 +32,7 @@ class Cours implements \JSONSerializable
     private ?\DateTimeInterface $dateHeureFin = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Choice(['TD','TP','Cours'])]
     private ?string $type = null;
 
     #[ORM\ManyToOne(inversedBy: 'cours')]

@@ -27,6 +27,7 @@ class Professeur implements \JsonSerializable
     private ?string $prenom = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Email]
     private ?string $email = null;
 
     #[ORM\OneToMany(mappedBy: 'professeur', targetEntity: Avis::class, orphanRemoval: true)]
