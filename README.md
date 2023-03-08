@@ -48,15 +48,65 @@ http://localhost:8000/api/matiere/professeurs
 
 ### Cours
 
-dateHeureDebut:  
+dateHeureDebut et dateHeureFin:  
  `#[Assert\Type("\DateTimeInterface")] //pour être sûr qu'on reçoit le bon type de date`
+  
+dateHeureDebut:
+ `#[Assert\Expression('this.pauseDej() == true', message: '')]`
+  `#[Assert\Expression('this.verifDateHeureDebut() == true', message: 'Les cours commencent à partir de 8h')]`
 
-dateHeureFin: `#[Assert\GreaterThan(propertyPath:"dateHeureDebut", message:"La date de fin ne peut pas être inférieure à la date de début")] //Pour s'assurer que la date de fin d'un cours est supérieure à la date de début (évite de faire des cours qui commencent le 06 et finissent le 05)`
+dateHeureFin: 
+  `#[Assert\GreaterThan(propertyPath: "dateHeureDebut", message: "La date de fin ne peut pas être inférieure à la date de début")]`
+  `#[Assert\Expression('this.pauseDej() == true', message: 'Attention, les cours ne peuvent pas empiéter sur la pause du midi')]`
+  `#[Assert\Expression('this.dureeCoursValide() == true', message: 'La durée du cours est trop longue')]`
+  `#[Assert\Expression('this.verifDateHeureFin() == true', message: 'Les cours finissent à 18h')]`
 
 type:
-`#[Assert\Choice(['TD','TP','Cours'])] //On s'assure que le choix TD, TP ou cours est imposé`
+  `#[Assert\Choice(['TD','TP','Cours'])] //On s'assure que le choix TD, TP ou cours est imposé`
+
+professeur: 
+ `    #[Assert\Expression('this.verifMatiereProfesseur()==true', message: 'Vous ne pouvez pas attribuer un professeur à un cours dont il n\'enseigne pas la matière')] `
 
 professeur, salle et matiere: `#[Assert\NotBlank] //Pour être sûr que les champs soient bien remplis`
+
+### Avis
+
+note:
+    `#[Assert\Range(min: 0, max: 5)]`
+
+commentaire: 
+    `#[Assert\NotBlank]`
+
+emailEtudiant:
+    `#[Assert\Email]`    
+
+### NoteCours
+
+note:
+    `#[Assert\Range(min: 0, max: 5)]`
+
+commentaire: 
+    `#[Assert\NotBlank]`
+
+emailEtudiant:
+    `#[Assert\Email]`  
+
+### Professeur
+
+nom:
+    `#[Assert\NotBlank]`
+
+prenom:
+    `#[Assert\NotBlank]`
+
+email:
+    `#[Assert\Email]`
+
+### Salle
+
+numero:
+    `#[Assert\NotBlank]`
+
 
 # Choix techniques et pourquoi
 

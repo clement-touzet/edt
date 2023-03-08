@@ -24,6 +24,7 @@ class NoteCours implements \JsonSerializable
     private ?int $note = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\NotBlank]
     private ?string $commentaire = null;
 
     #[ORM\Column(length: 255)]
