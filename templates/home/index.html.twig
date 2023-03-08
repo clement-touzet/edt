@@ -1,28 +1,60 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Calendrier - CAZENAVE - TOUZET{% endblock %}
+{% block title %}Calendrier - CAZENAVE - TOUZET
+{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+	<style>
+		.container {
+			margin-top: 50px;
+			width: 100%;
+		}
+		.center {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: center;
+			align-items: center;
+			gap: 40px;
+		}
+		.buttonSubmit {
+			background: #ff8494;
+			border: 1px solid #ffa9b7;
+			border-radius: 10px;
+			width: 200px;
+			height: 100px;
+			color: white;
+			font-size: 30px;
+			text
+		}
+		.buttonSubmit:hover {
+			background: #ffa9b7;
+		}
+	</style>
 
-    .container { text-align: center; height: 200px; position: relative;}
-    .center {display: flex; justify-content: center; align-items: center; height: 200px;}
-    .buttonSubmit { background: #ff8494; border: 1px solid #ffa9b7; border-radius: 10px; width: 70%; height: 100px}
-    .col{}
-</style>
-
-<body>
-    <div class="container">
-        <div class="center">
-            <div class="col">
-                <a href="/cours.html"><button class="buttonSubmit" type="submit">Calendrier</button></a>
-            </div>
-            <div class="col">
-                <a  href="/vue.html"><button class="buttonSubmit" type="submit">Note ton prof</button></a>
-            </div>    
-        </div>
-    </div>
-</body>
+	<body>
+		<div class="container">
+			<div class="center">
+				<div class="col">
+					<a href="/cours.html">
+						<button class="buttonSubmit" type="submit">Calendrier</button>
+					</a>
+				</div>
+				<div class="col">
+					<a href="/vue.html">
+						<button class="buttonSubmit" type="submit">Note ton prof</button>
+					</a>
+				</div>
+				<div class="col">
+					<a href="/notesCours.html">
+						<button class="buttonSubmit" type="submit">Note des cours</button>
+					</a>
+				</div>
+				<div class="col">
+					<a href="/matieres.html">
+						<button class="buttonSubmit" type="submit">Profs par matière</button>
+					</a>
+				</div>
+			</div>
+		</div>
+	</body>
 {% endblock %}
