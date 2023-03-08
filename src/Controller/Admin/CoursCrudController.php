@@ -20,6 +20,7 @@ class CoursCrudController extends AbstractCrudController
     {
         return [
             FormField::addPanel('Informations du cours'),
+            'id',
             AssociationField::new('matiere')
             ->setFormTypeOptions(['by_reference' => false]),
             
@@ -40,4 +41,3 @@ class CoursCrudController extends AbstractCrudController
     }
     
 }
-?>
