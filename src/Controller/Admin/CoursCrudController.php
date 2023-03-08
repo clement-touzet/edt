@@ -7,6 +7,8 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;;
 use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
+
 
 class CoursCrudController extends AbstractCrudController
 {
@@ -20,8 +22,10 @@ class CoursCrudController extends AbstractCrudController
     {
         return [
             FormField::addPanel('Informations du cours'),
+            IdField::new('id')->hideOnForm(),
+
             AssociationField::new('matiere')
-            ->setFormTypeOptions(['by_reference' => false]),
+            ->setFormTypeOptions(['by_reference' => true]),
             
             ChoiceField::new('type')->setChoices([
                 'TD' => 'TD',
@@ -33,9 +37,9 @@ class CoursCrudController extends AbstractCrudController
             'dateHeureDebut',
             'dateHeureFin',
             AssociationField::new('professeur')
-            ->setFormTypeOptions(['by_reference' => false]),
+            ->setFormTypeOptions(['by_reference' => true]),
             AssociationField::new('salle')
-            ->setFormTypeOptions(['by_reference' => false])
+            ->setFormTypeOptions(['by_reference' => true])
         ];
     }
     

@@ -4,7 +4,8 @@ namespace App\Controller\Admin;
 
 use App\Entity\Salle;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
-use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
+
 
 
 class SalleCrudController extends AbstractCrudController
@@ -18,6 +19,8 @@ class SalleCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
+            IdField::new('id')->hideOnForm(),
+
             'numero'
         ];
     }

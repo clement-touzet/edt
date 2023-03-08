@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Cours;
+use App\Entity\Matiere;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -21,7 +22,7 @@ class CoursRepository extends ServiceEntityRepository
         parent::__construct($registry, Cours::class);
     }
 
-    public function save(Cours $entity, bool $flush = false): void
+    public function save(Cours $entity,  Matiere $matiere, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
 
@@ -30,7 +31,7 @@ class CoursRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(Cours $entity, bool $flush = false): void
+    public function remove(Cours $entity, Matiere $matiere,  bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
 
