@@ -77,13 +77,15 @@
                                 <img class="logo" src="images/right-arrow.png">
                             </div>
                         </a>
-                        <div class="list_detail_item">
-                            <div>
-                                <div class="headline_details">Salle</div>
-                                <p class="content_details">{{selectedCours.salle.numero}}</p>
+                        <a :href="`/salles.html?=`">
+                            <div class="list_detail_item">
+                                <div>
+                                    <div class="headline_details">Salle</div>
+                                    <p class="content_details">{{selectedCours.salle.numero}}</p>
+                                </div>
+                                <img class="logo" src="images/right-arrow.png">
                             </div>
-                            <img class="logo" src="images/right-arrow.png">
-                        </div>
+                        </a>
                         <div class="addNoteDiv">
                             <a :href="`/noterCours.html?coursId=${idCoursSelected}`">
                                 <input type="button" class="addNote" value="Noter Ce Cours" />
