@@ -23,6 +23,7 @@ class CoursController extends AbstractController
         return $this->json($cours);
     }
 
+
     #[Route('/cours-from-date', name: 'list_from_a_day', methods: ['GET'])]
     public function getCoursFromDate(Request $request, CoursRepository $repository): JsonResponse
     {
@@ -40,6 +41,25 @@ class CoursController extends AbstractController
         return $this->json($coursFromDate, Response::HTTP_OK);
         // $date = new DateTimeImmutable($data);
         // return 
+    }
+
+    #[Route('/{id}', name: 'cours', methods: ['GET'])]
+    public function getCours(Cours $cours): JsonResponse
+    {
+        if (is_null($cours)) {
+            return $this->json(["error" => "Cours non trouvé"], Response::HTTP_NOT_FOUND);
+        }
+        return $this->json($cours, Response::HTTP_OK);
+    }
+
+    #[Route('/{id}/notes', name: 'get_note', methods: ['GET'])]
+    public function getNote(Cours $cours): JsonResponse
+    {
+        if (is_null($cours)) {
+            return $this->json(["error" => "Cours non trouvé"], Response::HTTP_NOT_FOUND);
+        }
+        $notes = $cours->getNoteCours();
+        return $this->json($notes, Response::HTTP_OK);
     }
 
     #[Route('/{id}/create-note', name: 'create_note', methods: ['POST'])]
