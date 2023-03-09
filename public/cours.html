@@ -155,7 +155,8 @@
 
                 sortClassesByDateAsc: function (classes) {
                     classes.sort((a, b) => {
-                        return new Date(a.debut).getTime() - new Date(b.debut).getTime();
+                        console.log(a, b)
+                        return new Date(a.dateHeureDebut.date).getTime() - new Date(b.dateHeureDebut.date).getTime();
                     });
                     return classes;
                 },
