@@ -47,11 +47,12 @@
                         <div class="calendar_header">
                             <h1>Détails </h1>
                         </div>
-                        <div class="list_detail_item">
+                        <div class="list_detail_item_no_redirect ">
                             <div class="">
 
                                 <div class="headline_details">Horaires</div>
-                                <p class="content_details">{{formatClassesDate(selectedCours.dateHeureDebut.date)}}h -
+                                <p class="content_details noBackgroundOnHover">
+                                    {{formatClassesDate(selectedCours.dateHeureDebut.date)}}h -
                                     {{formatClassesDate(selectedCours.dateHeureFin.date)}}h</p>
                             </div>
                         </div>
@@ -77,7 +78,7 @@
                                 <img class="logo" src="images/right-arrow.png">
                             </div>
                         </a>
-                        <a :href="`/salles.html?=`">
+                        <a :href="`/salles.html?salleId=${selectedCours.salle.id}`">
                             <div class="list_detail_item">
                                 <div>
                                     <div class="headline_details">Salle</div>
