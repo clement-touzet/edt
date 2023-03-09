@@ -30,6 +30,8 @@ input[type="submit"]:hover {
   text-decoration: none;
   font-size: 13px;
   font-weight: 400;
+  padding: 3px;
+  letter-spacing: 0.03rem;
 }
 .chipMatiere:hover {
   background-color: #ffdfe2;

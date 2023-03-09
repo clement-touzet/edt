@@ -18,18 +18,35 @@
                 <h1>Informations sur ton prof</h1>
             </div>
             <div class="information-professeur" v-if="professeur.id">
-                <span>
-                    {{professeur.nom}} {{professeur.prenom}}
-                </span>
-                <div class="matieres" v-for="matiere in professeur.matieres">
-                    {{matiere.titre}}
-                </div>
-                <hr>
-                <div class="cours" v-for="currentCours in cours">
-                    {{currentCours.matiere.titre}}
-                    {{formatDateToToday(currentCours.dateHeureDebut.date)}}
-                    {{formatClassesDate(currentCours.dateHeureDebut.date)}}h -
-                    {{formatClassesDate(currentCours.dateHeureFin.date)}}h
+                <div class="professseurCard">
+                    <div class="mainProfInfo">
+                        <h3 class="profTitle">
+                            {{professeur.nom}} {{professeur.prenom}}
+                        </h3>
+                        <div class="matieres">
+                            <div class="" v-for="matiere in professeur.matieres">
+                                <a href="/matieres.html">
+                                    <div class="chipMatiere">
+                                        {{matiere.titre}}
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="cardCoursInfo">
+                        <div class="coursInfo" v-for="currentCours in cours">
+                            <a :href="`/notesCours.html?coursId=${currentCours.id}`">
+                                <h4 class="titreCours">
+                                    {{currentCours.matiere.titre}}
+                                </h4>
+                                <div class="date">
+                                    {{formatDateToToday(currentCours.dateHeureDebut.date)}}
+                                    {{formatClassesDate(currentCours.dateHeureDebut.date)}}h -
+                                    {{formatClassesDate(currentCours.dateHeureFin.date)}}h
+                                </div>
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div v-else>
