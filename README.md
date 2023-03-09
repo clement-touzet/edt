@@ -186,7 +186,7 @@ On pourrait par exemple évaluer les conditions de travail, est-ce que le matér
 L'étudiant a-t'il rencontré des difficultés pendant ce cours etc...
 C'est pour cela qu'il nous a semblé plus judicieux de séparer l'avis d'un professeur et l'avis d'un cours.
 
-# Fonctionnalitées aditionnelles
+# Fonctionnalités aditionnelles
 
 ### Page matieres.html
 
