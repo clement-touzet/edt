@@ -8,12 +8,13 @@ Pour lancer le projet en local
 
 ```
 git clone https://github.com/clement-touzet/edt.git
+cd edt
 composer install
 ```
 
 ### Etape 2
 
-ajouter le fichier .env à la racine du projet
+ajouter le fichier .env à la racine du projet (et modifier si necessaire les acces à la bd)
 
 ### Etape 3
 
