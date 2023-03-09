@@ -81,6 +81,7 @@ p {
   padding: 20px 30px;
   background-color: white;
   border-radius: 12px;
+  margin: 5px 0;
 }
 
 .cours {
@@ -90,7 +91,6 @@ p {
   border-radius: 12px;
   display: flex;
   flex-direction: column;
-  gap: 20px;
 }
 
 .noSelectedDate {

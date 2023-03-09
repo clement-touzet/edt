@@ -34,15 +34,13 @@
                     <p>Veuillez sélectionner une date</p>
                 </div>
                 <div v-for="(cour, index) in cours" :key="index">
-                    <div class="cardInformation" v-if="cour.salle.numero == idSalleSellected">
+                    <div class="cardInformation" v-if="cour.salle.id == idSalleSellected">
                         <div class="cour">
                             <h3>{{cour.matiere.titre}} | {{formatClassesDate(cour.dateHeureDebut.date)}} à
                                 {{formatClassesDate(cour.dateHeureFin.date)}} </h3>
                             <p>{{cour.professeur.nom}} {{cour.professeur.prenom}} </p>
                             <p>{{cour.type}}</p>
-
                         </div>
-
                     </div>
                 </div>
             </div>
