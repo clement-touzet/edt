@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="./css/noterCours.css" rel="stylesheet" />
     <title>Noter un cours</title>
 </head>
 
@@ -13,38 +14,41 @@
         <a href="/">
             <input type="button" value="Accueil"></input>
         </a>
-        <form class="" v-on:submit.prevent="addNoteCours()">
-            <div class="form-group">
-                <label for="note">Note</label>
-                <select name="note" id="note" class="form-control" v-model="nouvelleNote.note">
-                    <option value="0">0</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                </select>
+        <form class="formulaireContainer" v-on:submit.prevent="addNoteCours()">
+            <div class="formulaire">
+                <div class="form-group">
+                    <label for="note">Note</label>
+                    <select name="note" id="note" class="form-control select-note" v-model="nouvelleNote.note">
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="commentaire">Commentaire</label>
+                    <textarea name="commentaire" id="commentaire" cols="30" rows="2" class="form-control" required
+                        v-model="nouvelleNote.commentaire"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="text" name="email" id="email" cols="30" rows="2" class="form-control" required
+                        v-model="nouvelleNote.emailEtudiant"></input>
+                </div>
+                <div class="form-group mt-3">
+                    <input type="submit" class="btn btn-primary" value="Ajouter">
+                </div>
+
+                <ul class="text-danger">
+                    <li v-for="error in errors">
+                        {{error}}
+                    </li>
+                </ul>
             </div>
 
-            <div class="form-group">
-                <label for="commentaire">Commentaire</label>
-                <textarea name="commentaire" id="commentaire" cols="30" rows="2" class="form-control" required
-                    v-model="nouvelleNote.commentaire"></textarea>
-            </div>
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="text" name="email" id="email" cols="30" rows="2" class="form-control" required
-                    v-model="nouvelleNote.emailEtudiant"></input>
-            </div>
-            <div class="form-group mt-3">
-                <input type="submit" class="btn btn-primary" value="Ajouter">
-            </div>
-
-            <ul class="text-danger">
-                <li v-for="error in errors">
-                    {{error}}
-                </li>
-            </ul>
 
         </form>
     </div>

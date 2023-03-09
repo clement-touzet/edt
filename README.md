@@ -166,7 +166,8 @@ Affiche chaque matières et leurs profs
 
 ### Page salles.html
 
-Affiche la liste des salles. En en selectionnant une, cela affichera la liste des cours du jours sélectionné pour la salle correspondante
+Affiche la liste des salles. En en selectionnant une, cela affichera la liste des cours du jours sélectionné pour la salle correspondante.
+Les informations du cours affichés sont : la matière du cours, son heure de début et de fin, le nom du prof qui fait le cours et le type du cours.
 
 ### Page notesCours.html
 
