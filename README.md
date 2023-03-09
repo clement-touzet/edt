@@ -24,6 +24,7 @@ mysql : 5.7.36 ou plus
 ### Etape 4
 
 ```
+php bin/console doctrine:fixtures:load
 cd public
 php -S localhost:8000
 ```
