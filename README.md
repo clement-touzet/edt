@@ -174,6 +174,9 @@ Les informations du cours affichés sont : la matière du cours, son heure de d�
 Affiche la liste des note des cours pour le jour selectionnés. Affiche aussi la moyenne des notes pour un cours.
 La page prend en argument dans l'url un coursId qui permet d'afficher les notes d'un seul cours (C'est sensé être utiliser après l'ajout d'une note à un cours)
 
+### Page showProf.html
+Accessible depuis le calendrier quand on clique sur son professeur, cette page affiche les détails de ce dernier.
+
 # Implémenté mais ne fonctionne pas
 
 # Problèmes rencontrés et difficultés
