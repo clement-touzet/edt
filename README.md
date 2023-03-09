@@ -2,6 +2,33 @@
 
 # Process d'installation du projet
 
+Pour lancer le projet en local
+
+### Etape 1
+
+```
+git clone https://github.com/clement-touzet/edt.git
+composer install
+```
+
+### Etape 2
+
+ajouter le fichier .env à la racine du projet
+
+### Etape 3
+
+Lancer votre bd en local (exemple : wampserver)
+php 8.2.3
+mysql : 5.7.36 ou plus
+
+### Etape 4
+
+```
+php bin/console doctrine:fixtures:load
+cd public
+php -S localhost:8000
+```
+
 # Définition des points d'entrees de l'API
 
 ### Cours
@@ -175,6 +202,7 @@ Affiche la liste des note des cours pour le jour selectionnés. Affiche aussi la
 La page prend en argument dans l'url un coursId qui permet d'afficher les notes d'un seul cours (C'est sensé être utiliser après l'ajout d'une note à un cours)
 
 ### Page showProf.html
+
 Accessible depuis le calendrier quand on clique sur son professeur, cette page affiche les détails de ce dernier.
 
 # Implémenté mais ne fonctionne pas
@@ -196,3 +224,7 @@ Pour gérer les assert sur les horaires de cours et on a été vite limité.
 Nous avons donc dû faire des fonctions customisées que l'on appelle dans l'assert.
 
 # AUTRE
+
+```
+
+```

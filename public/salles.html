@@ -90,6 +90,15 @@
             },
             mounted: async function () {
                 this.salles = await this.getSalles();
+                const queryString = window.location.search;
+                const urlParams = new URLSearchParams(queryString);
+                let salleId = urlParams.get('salleId');
+                console.log(salleId)
+                if (!salleId) {
+                    this.setSelectedSalle(null);
+                } else {
+                    this.setSelectedSalle(salleId);
+                }
             },
         }).mount('#app');
     </script>
