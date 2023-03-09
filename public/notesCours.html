@@ -123,7 +123,9 @@
                     for (let i = 0; i < notes.length; i++) {
                         somme += notes[i].note;
                     }
-                    return somme / notes.length;
+                    let moyenne = somme / notes.length;
+                    let moyenneArrondie = Math.round(moyenne * 100) / 100;
+                    return moyenneArrondie;
                 },
                 dayChanged: function () {
                     console.log("dayChanged", this.dateNotesToDisplay)
