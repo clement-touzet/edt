@@ -143,12 +143,16 @@ class Professeur implements \JsonSerializable
 
     public function jsonSerialize(): mixed
     {
+        $coursIds = $this->cours->map(function (Cours $cours) {
+            return $cours->getId();
+        })->toArray();
         return [
             'id' => $this->getId(),
             'nom' => $this->getNom(),
             'prenom' => $this->getPrenom(),
             'email' => $this->getEmail(),
-            'matieres' => $this->getMatieres()->toArray()
+            'matieres' => $this->getMatieres()->toArray(),
+            'cours' => $coursIds,
         ];
     }
 
