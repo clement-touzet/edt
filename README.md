@@ -14,7 +14,7 @@ composer install
 
 ### Etape 2
 
-ajouter le fichier .env à la racine du projet (et modifier si necessaire les acces à la bd)
+ajouter le fichier env (dans les pièces jointes du mail) à la racine du projet et renommez-le ".env" (modifier si necessaire les acces à la bd)
 
 ### Etape 3
 ```
