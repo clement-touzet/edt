@@ -17,11 +17,12 @@ composer install
 ajouter le fichier .env à la racine du projet (et modifier si necessaire les acces à la bd)
 
 ### Etape 3
-
+```
 Lancer votre bd en local (exemple : wampserver)
 php 8.2.3
 mysql : 5.7.36 ou plus
-
+Créez une base de données qui s'appelle "edt" et importez le fichier "edt.sql" dedans.
+```
 ### Etape 4
 
 ```
@@ -210,6 +211,8 @@ Accessible depuis le calendrier quand on clique sur son professeur, cette page a
 
 # Problèmes rencontrés et difficultés
 
+RAS
+
 ### Navigation entre les pages
 
 Pour la navigation entre les pages, mettre dans une div un @click qui exécute une fonction pour rediriger(window.location.href = "vue.html") vers une page semblait une bonne solution, mais cela ne marchais pas et le click s'activais lorsque le div était chargé/reload. La solution a été de mettre une balise a ave un href.
@@ -224,8 +227,3 @@ Nous avons voulu utiliser les méthodes disponibles dans symfony par exemple: #[
 Pour gérer les assert sur les horaires de cours et on a été vite limité.
 Nous avons donc dû faire des fonctions customisées que l'on appelle dans l'assert.
 
-# AUTRE
-
-```
-
-```
