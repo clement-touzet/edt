@@ -195,27 +195,26 @@ C'est pour cela qu'il nous a semblé plus judicieux de séparer l'avis d'un prof
 
 ### Page matieres.html
 
-Affiche chaque matières et leurs profs
+Affiche chaque matière et leurs profs
 
 ### Page salles.html
 
-Affiche la liste des salles. En en selectionnant une, cela affichera la liste des cours du jours sélectionné pour la salle correspondante.
+Affiche la liste des salles. En en sélectionnant une, cela affichera la liste des cours du jour sélectionné pour la salle correspondante.
 Les informations du cours affichés sont : la matière du cours, son heure de début et de fin, le nom du prof qui fait le cours et le type du cours.
 
 ### Page notesCours.html
 
-Affiche la liste des note des cours pour le jour selectionnés. Affiche aussi la moyenne des notes pour un cours.
-La page prend en argument dans l'url un coursId qui permet d'afficher les notes d'un seul cours (C'est sensé être utiliser après l'ajout d'une note à un cours)
+Affiche la liste des note des cours pour le jour selectionné. Affiche aussi la moyenne des notes pour un cours.
+La page prend en argument dans l'url un coursId qui permet d'afficher les notes d'un seul cours (C'est sensé être utilisé après l'ajout d'une note à un cours)
 
 ### Page showProf.html
 
 Accessible depuis le calendrier quand on clique sur son professeur, cette page affiche les détails de ce dernier.
 
 # Implémenté mais ne fonctionne pas
+RAS
 
 # Problèmes rencontrés et difficultés
-
-RAS
 
 ### Navigation entre les pages
 
@@ -223,7 +222,7 @@ Pour la navigation entre les pages, mettre dans une div un @click qui exécute u
 
 ### Note d'un cours
 
-Nous voulions utiliser la meme table Avis que pour noter un prof mais cela cause des problèmes de conflits au niveau de la db.
+Nous voulions utiliser la meme table Avis que pour noter un prof mais cela cause des problèmes de conflits au niveau de la db d'où la table NoteCours.
 
 ### Assert des cours
 
