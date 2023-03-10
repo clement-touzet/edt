@@ -13,8 +13,9 @@ ajouter le fichier env (dans les pièces jointes du mail) à la racine du projet
 ```
 
 ### Etape 2
+```
 composer install
-
+```
 ### Etape 3
 ```
 Lancer votre bd en local (exemple : wampserver)
@@ -25,9 +26,12 @@ Créez une base de données qui s'appelle "edt" et importez le fichier "edt.sql"
 ### Etape 4
 
 ```
-php bin/console doctrine:fixtures:load
+php bin/console doctrine:fixtures:load (le terminal va vous demander si vous voulez purger la bd, mettez "yes")
 cd public
 php -S localhost:8000
+
+Pour aller dans le backoffice,
+id: admin, mdp: admin
 ```
 
 # Définition des points d'entrees de l'API
