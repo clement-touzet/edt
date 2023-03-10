@@ -22,6 +22,7 @@ Lancer votre bd en local (exemple : wampserver)
 php 8.2.3
 mysql : 5.7.36 ou plus
 Créez une base de données qui s'appelle "edt" et importez le fichier "edt.sql" dedans.
+(Le fichier "edt.sql" se situe à la racine du projet)
 ```
 ### Etape 4
 
