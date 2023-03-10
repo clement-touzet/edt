@@ -9,12 +9,11 @@ Pour lancer le projet en local
 ```
 git clone https://github.com/clement-touzet/edt.git
 cd edt
-composer install
+ajouter le fichier env (dans les pièces jointes du mail) à la racine du projet et renommez-le ".env" (modifier si necessaire les acces à la bd)
 ```
 
 ### Etape 2
-
-ajouter le fichier env (dans les pièces jointes du mail) à la racine du projet et renommez-le ".env" (modifier si necessaire les acces à la bd)
+composer install
 
 ### Etape 3
 ```
