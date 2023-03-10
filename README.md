@@ -92,7 +92,7 @@ dateHeureDebut et dateHeureFin:
 ```
 dateHeureDebut:
  #[Assert\Expression('this.pauseDej() == true', message: '')]
- //la fonction pauseDej() s'assure que les horaires de cours ne soient pas entre midi et 14h
+ //la fonction pauseDej() s'assure que les horaires de cours ne soient pas entre 12h30 et 14h
 
  #[Assert\Expression('this.verifDateHeureDebut() == true', message: 'Les cours commencent à partir de 8h')]
  //la fonction verifDateHeureDebut s'assure que les cours commencent à partir de 8h
